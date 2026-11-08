@@ -91,7 +91,7 @@
     fx.appendChild(c); setTimeout(() => c.remove(), 6500);
   }
   function sink() {
-    const fx = $('#duoFx'); if (!fx) return;
+    const fx = $('#duo .duo-sea'); if (!fx) return; // mətnin arxasında batsın
     const c = document.createElement('div'); c.className = 'duo-sink';
     c.innerHTML = Array.from({ length: 10 }, () => { const s = rnd(6, 16); return `<i class="duo-up slow" style="left:${rnd(10, 90)}%;width:${s}px;height:${s}px;animation-delay:${rnd(0, 2)}s"></i>`; }).join('')
       + `<span class="duo-sadfish">${fishSVG('#94A3B8', 54)}</span>`;
