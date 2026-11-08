@@ -9,10 +9,10 @@ Azərbaycan dilində quiz oyunu: 240+ sual, 13 mövzu, öz çəkdiyimiz 56 bayra
 
 | Yer | Nədir |
 |---|---|
-| `index.html`, `*.js`, `styles.css`, `assets/`, `img/` | Oyunun özü (GitHub Pages bu kökdən açılır) |
+| `index.html`, `*.js`, `styles.css`, `assets/`, `img/` | Oyunun özü (GitHub Pages bu kökdən açılır); `assets/flags/` — 56 bayraq SVG |
 | [BRIEF.md](BRIEF.md) | Layihə brifi: konsepsiya, ad, loqo, dizayn, quiz məntiqi, gamification, psixoloji marketinq, biznes modeli |
 | [db/schema.sql](db/schema.sql) | Sual bankı və oyun data bazası sxemi (SQLite) |
-| [db/seed_questions.sql](db/seed_questions.sql) | Baza üçün sual seed-i |
+| [db/seed_questions.sql](db/seed_questions.sql) | 246 sual (60 əsas + 56 bayraq + 130 paytaxt) və 67 ölkə |
 | [research/](research/) | Bazar araşdırması: Google Play rəyləri, Reddit, Instagram/TikTok (Apify) — açıq mənbəli, real data, skriptlər və hesabat |
 | [tools/](tools/) | Loqo/seed generatoru (`build.mjs`) və sayt dərc skripti |
 

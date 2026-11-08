@@ -10,7 +10,17 @@ CREATE TABLE lenses (
   slug        TEXT NOT NULL UNIQUE,          -- 'elm', 'tarix', ...
   name        TEXT NOT NULL,                 -- 'Elm'
   color_hex   TEXT NOT NULL,
-  icon        TEXT
+  icon        TEXT,
+  parent_id   INTEGER REFERENCES lenses(id)  -- alt mövzu: bayraqlar/paytaxtlar -> ölkələr
+);
+
+-- Ölkələr (bayraq və paytaxt sualları bu cədvəldən yaranır)
+CREATE TABLE countries (
+  code        TEXT PRIMARY KEY,              -- ISO 3166-1 alpha-2: 'az'
+  name        TEXT NOT NULL,                 -- 'Azərbaycan'
+  capital     TEXT NOT NULL,                 -- 'Bakı'
+  region      TEXT NOT NULL CHECK (region IN ('eu','ca','as','af','am','oc')),
+  flag_url    TEXT                           -- 'assets/flags/az.svg'; NULL = bayraq çəkilməyib
 );
 
 -- Mənbələr
@@ -24,7 +34,9 @@ CREATE TABLE sources (
 -- Suallar
 CREATE TABLE questions (
   id            INTEGER PRIMARY KEY,
+  slug          TEXT UNIQUE,                 -- sabit açar: 'flag-az', 'cap-az'
   text          TEXT NOT NULL,
+  country_code  TEXT REFERENCES countries(code),
   kind          TEXT NOT NULL CHECK (kind IN
                   ('knowledge','opinion','estimate','order','map','media','two_truths')),
   explanation   TEXT,                        -- düzgün cavabdan sonra 1 cümlə izah
@@ -51,6 +63,7 @@ CREATE TABLE answer_options (
   question_id INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
   text        TEXT NOT NULL,
   is_correct  INTEGER NOT NULL DEFAULT 0,    -- 'opinion' suallarında hamısı 0
+  media_url   TEXT,                          -- variantın şəkli (məs. bayraq)
   sort_order  INTEGER NOT NULL DEFAULT 0     -- 'order' növündə düzgün sıra
 );
 
@@ -144,4 +157,8 @@ INSERT INTO lenses (slug, name, color_hex) VALUES
   ('medeniyyet','Mədəniyyət və folklor','#DC2626'),
   ('pop','Pop-kultura','#EA580C'),
   ('idman','İdman','#16A34A'),
-  ('texnologiya','Texnologiya və gündəlik həyat','#475569');
+  ('texnologiya','Texnologiya və gündəlik həyat','#475569'),
+  ('olkeler','Ölkələr','#0EA5E9');
+INSERT INTO lenses (slug, name, color_hex, parent_id) VALUES
+  ('bayraqlar','Bayraqlar','#F97316',(SELECT id FROM lenses WHERE slug='olkeler')),
+  ('paytaxtlar','Paytaxtlar','#6366F1',(SELECT id FROM lenses WHERE slug='olkeler'));
