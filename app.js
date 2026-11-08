@@ -22,6 +22,16 @@
   ];
   const T = Object.fromEntries(TOPICS.map(t => [t.slug, t]));
   const topicQs = slug => ALLQ.filter(T[slug].filter);
+  // Paylaşılan oyun: ?oyun=<açar> (challenges.js)
+  const CH_KEY = (() => { try { return new URLSearchParams(location.search).get('oyun'); } catch (e) { return null; } })();
+  const CH = CH_KEY && window.CHALLENGES ? CHALLENGES[CH_KEY] : null;
+  const clip = (v, n = 24) => String(v || '').trim().slice(0, n);
+  // Canlı dost dueli: ?oyun=1&duel=KOD&f=Çağıran&t=Çağırılan (duo.js)
+  const DUO = (() => { try { const u = new URLSearchParams(location.search), c = u.get('duel');
+    return CH && c ? { code: c.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8), f: clip(u.get('f')) || 'Dostun' } : null; } catch (e) { return null; } })();
+  const chItems = () => { const byId = Object.fromEntries(ALLQ.map(q => [q.id, q])); return CH.items.map(x => x.ref ? byId[x.ref] : x).filter(Boolean); };
+  function startChallenge() { startQuiz(chItems(), CH.title, false, CH_KEY); }
+  const chLink = () => `${location.origin}${location.pathname}?oyun=${encodeURIComponent(CH_KEY)}`;
   const TITLES = ['Yeni dalğıc', 'Həvəskar', 'Bilici', 'Usta', 'Ekspert', 'Dahi', 'Əfsanə'];
   function level(xp = 0) {
     const lvl = Math.floor(Math.sqrt(xp / 60)) + 1, cur = 60 * (lvl - 1) ** 2, next = 60 * lvl ** 2;
@@ -349,13 +359,16 @@
             <div class="card stat"><b data-count="${Q.gainP}" data-plus>0</b><small>inci</small></div>
             <div class="card stat"><b data-count="${Q.gainD}" data-plus data-unit="m">0</b><small>dərinlik</small></div>
           </div>
+          ${Q.challenge ? challengeResult(Q, r) : ''}
           ${Q.daily ? `<div class="share-grid" aria-label="Nəticə şəbəkəsi">${Q.res.map((x, i) => `<i class="${x ? 'y' : 'n'}" style="animation-delay:${i * .04}s"></i>`).join('')}</div>
             <button class="btn white block" data-act="share" style="margin-bottom:14px">Nəticəni paylaş</button>` : ''}
-          <div style="display:grid;gap:14px">
+          ${Q.challenge ? `<div style="display:grid;gap:14px">
+            <button class="btn white block" data-go="home">Sualtını kəşf et 🤿</button>
+          </div>` : `<div style="display:grid;gap:14px">
             <button class="btn blue block" data-act="quickduel">Duel et ⚔️</button>
             <button class="btn white block" data-go="home">Əsas səhifə</button>
           </div>
-          <div style="margin-top:18px;text-align:left">${secretCard()}</div>
+          <div style="margin-top:18px;text-align:left">${secretCard()}</div>`}
         </div>`;
     },
 
@@ -484,9 +497,38 @@
     return `<svg class="radar" viewBox="-34 0 388 320">${rings}${axes}<g class="poly"><polygon points="${vals.map((v, i) => pt(i, R * v).join(',')).join(' ')}" fill="rgba(30,107,255,.25)" stroke="#1E6BFF" stroke-width="3" stroke-linejoin="round"/>${dots}</g>${labels}</svg>`;
   }
 
+  /* ════════════ PAYLAŞILAN OYUN / DOST DUELİ ════════════ */
+  function challengeResult(Q, r) {
+    const verdict = r >= .85 ? 'Dərinliklərin ustasısan! Bu sınaqdan belə nəticə az adam çıxarır.' : r >= .6 ? 'Güclü nəticədir — suallar asan deyildi.' : r >= .35 ? 'Pis deyil! Bu sınaq çətin idi.' : 'Bu sınaq həqiqətən çətin idi. Cavablara bax, növbəti dəfə daha dərinə dalarsan.';
+    return `<div class="share-grid">${Q.res.map((x, i) => `<i class="${x ? 'y' : 'n'}" style="animation-delay:${i * .04}s"></i>`).join('')}</div>
+      <p class="ch-verdict">${verdict}</p>
+      <button class="btn block" data-act="duohost" style="margin-bottom:12px">Dostunu canlı duelə çağır ⚔️</button>
+      <button class="btn white block" data-act="share" style="margin-bottom:12px">Nəticəni paylaş 🔗</button>
+      <details class="ch-review"><summary>Cavablara bax</summary>
+      ${Q.items.map((q, i) => `<div class="ch-row ${Q.res[i] ? 'y' : 'n'}"><span class="ch-n">${Q.res[i] ? '✓' : '✗'}</span><span><small>${esc(q.q)}</small><b>${q.kind === 'e' ? `${fmt(q.ans)} ${esc(q.unit)}` : esc(q.opts[q.a])}</b></span></div>`).join('')}
+      </details>`;
+  }
+  function splashForm() {
+    let saved = {}; try { saved = JSON.parse(localStorage.getItem('sualti-duelname') || '{}'); } catch (e) {}
+    return `<form class="mk" id="mkForm" autocomplete="off" onsubmit="return false">
+      <label>Sənin adın<input id="mkF" maxlength="24" value="${esc(saved.f || '')}" placeholder="məs. İlduza"></label>
+      <p class="mk-err" id="mkErr" hidden>Adını yaz 🙂</p>
+      <button type="button" class="btn pulse splash-btn" data-act="duohost">Duel linkini yarat ⚔️</button>
+      <button type="button" class="mk-solo" data-act="enter">Duelsiz, tək oyna</button>
+    </form>`;
+  }
+  function openDuo(role) {
+    const sp = $('#splash'); if (sp) { sp.classList.add('out'); setTimeout(() => sp.remove(), 900); }
+    try { sessionStorage.setItem('sualti-entered', '1'); } catch (e) {}
+    SFX.play('logo');
+    if (!window.Duo) return toast('Duel modulu yüklənmədi');
+    if (role === 'join') Duo.join({ code: DUO.code, f: DUO.f, t: UI.duoNames.t, key: CH_KEY, items: chItems() });
+    else Duo.host({ f: UI.duoNames.f, key: CH_KEY, items: chItems() });
+  }
+
   /* ════════════ TƏK OYUN ════════════ */
-  function startQuiz(items, title, daily = false) {
-    UI.quiz = { items, i: 0, res: [], title, daily, gainP: 0, gainD: 0, time: 20 };
+  function startQuiz(items, title, daily = false, challenge = null) {
+    UI.quiz = { items, i: 0, res: [], title, daily, challenge, gainP: 0, gainD: 0, time: 20 };
     UI.streakBumped = false; go('quiz');
   }
   function startQuestion() {
@@ -507,6 +549,7 @@
   function answer(choice, srcEl) {
     const Q = UI.quiz, q = Q.items[Q.i];
     if (Q.locked) return; Q.locked = true; stopTick(); SFX.stopSpeak();
+    Q.secs = (Q.secs || 0) + Math.min(Q.time, Q.time - Math.max(0, tLeft) / 10);
     const opts = $$('.opt'); opts.forEach(o => o.disabled = true);
     let ok = false, p = 0, d = 0, html;
     if (q.kind === 'k') {
@@ -832,6 +875,14 @@
   function closeModal() { const m = $('#modal'); m.classList.remove('open'); m.innerHTML = ''; }
   async function share() {
     const Q = UI.quiz, ok = Q.res.filter(Boolean).length;
+    if (Q.challenge) {
+      const g = []; for (let i = 0; i < Q.res.length; i += 10) g.push(Q.res.slice(i, i + 10).map(x => x ? '🟦' : '⬜').join(''));
+      const text = `${Q.title}: ${ok}/${Q.res.length} 🤿\n${g.join('\n')}\nSən neçə edərsən? 20 çətin sual:`;
+      try { if (navigator.share) { await navigator.share({ text, url: chLink() }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+      try { await navigator.clipboard.writeText(`${text}\n${chLink()}`); toast('Link kopyalandı — WhatsApp və ya Telegram-a yapışdır'); }
+      catch (e) { toast(chLink()); }
+      return;
+    }
     const rows = []; for (let i = 0; i < Q.res.length; i += 10) rows.push(Q.res.slice(i, i + 10).map(x => x ? '🟦' : '⬜').join(''));
     const d = new Date().toLocaleDateString('az-AZ', { day: 'numeric', month: 'short' });
     const text = `Sualtı · Gündəlik 20 · ${d}\n${rows.join('\n')}\n${ok}/${Q.res.length} · 🔥${S.streak} · ${S.depth} m\nilduzamammadova-cell.github.io/sualti`;
@@ -844,7 +895,7 @@
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-go],[data-act],[data-topic],[data-opt],[data-lb],[data-reason]');
     if (!t) return;
-    if (t.dataset.opt === undefined && !['sound', 'estimate', 'enter', 'logo'].includes(t.dataset.act)) SFX.play('tap');
+    if (t.dataset.opt === undefined && !['sound', 'estimate', 'enter', 'logo', 'duohost', 'duojoin'].includes(t.dataset.act)) SFX.play('tap');
     if (t.dataset.go) return go(t.dataset.go);
     if (t.dataset.lb) { UI.lb = t.dataset.lb; return render(); }
     if (t.dataset.topic) return go('topic', { topic: t.dataset.topic });
@@ -879,6 +930,27 @@
       sound: () => { SFX.toggle(); $$('[data-act=sound]').forEach(b => b.innerHTML = SFX.on ? ICON.sound : ICON.mute); },
       read: () => { const q = UI.quiz.items[UI.quiz.i]; if (!SFX.speak(q.q + (q.opts ? '. ' + q.opts.map((o, j) => 'ABCD'[j] + ': ' + o).join('. ') : ''))) t.querySelector('span').textContent = 'Dəstəklənmir'; },
       enter: () => enterApp(),
+      stake: () => { $$('.mk-chip').forEach(c => c.classList.toggle('on', c === t)); $('#mkS').value = ''; },
+      duohost: () => {
+        const fEl = $('#mkF');
+        if (fEl) {
+          const f = clip(fEl.value);
+          if (!f) { $('#mkErr').hidden = false; return; }
+          UI.duoNames = { f };
+          try { localStorage.setItem('sualti-duelname', JSON.stringify({ f })); } catch (er) {}
+          return openDuo('host');
+        }
+        // nəticə ekranından: adları soruş
+        const m = $('#modal'); m.classList.add('open');
+        m.innerHTML = `<div class="modal-bg" data-act="closeModal"></div><div class="sheet duo-sheet"><h3>Canlı duel ⚔️</h3>${splashForm()}</div>`;
+      },
+      duojoin: () => {
+        const t = clip($('#jnName') && $('#jnName').value);
+        if (!t) { $('#jnErr').hidden = false; $('#jnName').focus(); return; }
+        UI.duoNames = { t };
+        try { localStorage.setItem('sualti-name', t); } catch (er) {}
+        openDuo('join');
+      },
       logo: () => { SFX.play('logo'); const mk = $('.brand-logo .logo-mark'); mk && (mk.classList.remove('ping'), void mk.offsetWidth, mk.classList.add('ping')); },
       closeModal: () => closeModal(),
       party: () => window.Party && Party.host(),
@@ -894,15 +966,24 @@
     SFX.play('logo'); sp.classList.add('out');
     try { sessionStorage.setItem('sualti-entered', '1'); } catch (e) {}
     setTimeout(() => sp.remove(), 1100);
+    if (CH && !UI.chStarted) { UI.chStarted = true; startChallenge(); }
   }
   (function splash() {
     let seen = false; try { seen = sessionStorage.getItem('sualti-entered') === '1'; } catch (e) {}
-    const sp = $('#splash'); if (seen) { sp.remove(); return; }
+    const sp = $('#splash'); if (seen && !CH) { sp.remove(); return; }
     sp.innerHTML = `<div class="splash-rays"></div><div class="splash-in">
         <div class="splash-mascot">${mascot('happy')}</div>
         <div class="chunky big splash-word">sual<span class="yellow">tı</span></div>
-        <p class="splash-tag">Sualın dərinliyinə dal</p>
-        <button class="btn pulse splash-btn" data-act="enter">Dal! 🤿</button><small class="splash-hint">🔊 səsi aç</small></div>
+        ${DUO ? `<p class="splash-hey">Hey! 👋</p>
+          <div class="splash-ch"><b>${esc(DUO.f)} səni canlı quiz duelinə çağırır ⚔️</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span>
+          <span class="splash-note">İkiniz eyni anda, eyni suallara cavab verəcəksiniz</span></div>
+          <form class="mk" autocomplete="off" onsubmit="return false">
+            <label>Adını yaz<input id="jnName" maxlength="24" placeholder="Adın" value="${esc((() => { try { return localStorage.getItem('sualti-name') || ''; } catch (e) { return ''; } })())}"></label>
+            <p class="mk-err" id="jnErr" hidden>Adını yaz 🙂</p>
+            <button type="button" class="btn pulse splash-btn" data-act="duojoin">Qəbul et ⚔️</button>
+          </form>`
+        : CH ? `<div class="splash-ch"><b>${esc(CH.title)}</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span></div>${splashForm()}`
+        : `<p class="splash-tag">Sualın dərinliyinə dal</p><button class="btn pulse splash-btn" data-act="enter">Dal! 🤿</button>`}<small class="splash-hint">🔊 səsi aç</small></div>
       <div class="splash-bubbles">${Array.from({ length: 14 }, (_, i) => `<i style="left:${5 + i * 6.7}%;animation-delay:${(i % 5) * .12}s;width:${10 + (i * 7) % 22}px;height:${10 + (i * 7) % 22}px"></i>`).join('')}</div>`;
   })();
 

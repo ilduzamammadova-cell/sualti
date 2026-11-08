@@ -15,7 +15,7 @@ done
 cp BRIEF.md "$SITE/BRIEF.md"
 # yerli fayl istinadlarına versiya əlavə et (xarici linklərə toxunma)
 sed -E -i '' \
-  -e 's#(src|href)="((questions|mascot|art|countries|sound|app|party)\.js|styles\.css)"#\1="\2?v='"$VER"'"#g' \
+  -e 's#(src|href)="((questions|mascot|art|countries|sound|challenges|app|party|duo)\.js|styles\.css)"#\1="\2?v='"$VER"'"#g' \
   "$SITE/index.html"
 cd "$SITE"
 git add -A

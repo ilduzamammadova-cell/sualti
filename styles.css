@@ -1066,3 +1066,65 @@ button.ph-opt:not(:disabled):active { transform: translateY(3px); box-shadow: 0 
 .ph-between span { font-size: 16px; opacity: .9; }
 .ph-opt.wrongpick { opacity: 1; box-shadow: 0 0 0 5px #FF4D6A, 0 6px 0 var(--navy); }
 .ph-opt.right { opacity: 1 !important; }
+
+/* ── Paylaşılan oyun (?oyun=) ── */
+.splash-ch { display: grid; gap: 4px; margin: 4px auto 18px; padding: 12px 18px; border-radius: 18px; background: rgba(255,255,255,.14); border: 2px solid rgba(255,255,255,.35); color: #fff; max-width: 300px; }
+.splash-ch b { font-family: 'Baloo 2', sans-serif; font-size: 22px; line-height: 1.1; }
+.splash-ch span { font-weight: 700; font-size: 14px; opacity: .9; }
+.ch-verdict { font-weight: 800; color: #0B2A5B; margin: 4px 0 14px; text-wrap: balance; }
+.ch-review { text-align: left; margin: 0 0 16px; background: #fff; border: 3px solid #0B2A5B; border-radius: 18px; padding: 4px 14px; }
+.ch-review summary { cursor: pointer; font-weight: 900; color: #1E6BFF; padding: 10px 0; list-style-position: inside; }
+.ch-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1.5px solid #E3ECF8; }
+.ch-row small { display: block; color: #4A6283; font-weight: 700; line-height: 1.3; }
+.ch-row b { display: block; color: #0B2A5B; margin-top: 2px; }
+.ch-n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; color: #fff; background: #16A34A; font-size: 13px; }
+.ch-row.n .ch-n { background: #E5484D; }
+
+/* ── Paylaşılan oyun və canlı dost dueli ── */
+.splash-ch { display: grid; gap: 4px; margin: 4px auto 18px; padding: 12px 18px; border-radius: 18px; background: rgba(255,255,255,.14); border: 2px solid rgba(255,255,255,.35); color: #fff; max-width: 300px; }
+.splash-ch b { font-family: 'Baloo 2', sans-serif; font-size: 22px; line-height: 1.15; }
+.splash-ch span { font-weight: 700; font-size: 14px; opacity: .9; }
+.splash-hey { font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 32px; color: #FFD43B; margin: 6px 0 8px; text-shadow: 0 3px 0 #0B2A5B; }
+.splash-note { font-size: 13px !important; opacity: .8 !important; margin-top: 4px; }
+.mk { display: grid; gap: 10px; max-width: 300px; margin: 0 auto; text-align: left; }
+.mk label { display: grid; gap: 4px; color: #fff; font-weight: 800; font-size: 14px; }
+.mk input { font: 700 16px Nunito, sans-serif; padding: 12px 14px; border-radius: 14px; border: 3px solid #0B2A5B; background: #fff; color: #0B2A5B; width: 100%; box-sizing: border-box; }
+.mk input:focus { outline: 3px solid #FFD43B; outline-offset: 1px; }
+.mk .splash-btn { margin-top: 4px; justify-self: center; }
+.mk-err { margin: 0; color: #FFD43B; font-weight: 900; text-align: center; }
+.mk-solo { background: none; border: 0; color: #fff; font: 800 14px Nunito, sans-serif; text-decoration: underline; opacity: .85; cursor: pointer; padding: 6px; justify-self: center; }
+.duo-sheet .mk label, .duo-sheet .mk-solo { color: #0B2A5B; }
+.duo-sheet .mk-err { color: #C2272D; }
+.ch-verdict { font-weight: 800; color: #0B2A5B; margin: 4px 0 14px; text-wrap: balance; }
+.ch-review { text-align: left; margin: 0 0 16px; background: #fff; border: 3px solid #0B2A5B; border-radius: 18px; padding: 4px 14px; }
+.ch-review summary { cursor: pointer; font-weight: 900; color: #1E6BFF; padding: 10px 0; }
+.ch-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1.5px solid #E3ECF8; }
+.ch-row small { display: block; color: #4A6283; font-weight: 700; line-height: 1.3; }
+.ch-row b { display: block; color: #0B2A5B; margin-top: 2px; }
+.ch-n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; color: #fff; background: #16A34A; font-size: 13px; }
+.ch-row.n .ch-n { background: #E5484D; }
+.duo-link { width: 100%; background: rgba(255,255,255,.14); border: 2px dashed rgba(255,255,255,.5); border-radius: 14px; padding: 10px 12px; font-size: 13px; font-weight: 700; word-break: break-all; user-select: all; }
+.duo-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.duo-pills span { padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.15); border: 2px solid rgba(255,255,255,.35); font-weight: 900; font-size: 14px; color: #fff; }
+.duo-pills span.on { background: #FFD43B; color: #0B2A5B; border-color: #0B2A5B; }
+.duo-pills.sm span { padding: 3px 12px; font-size: 12px; }
+.duo-pills.sm #duoOp { opacity: .45; }
+.duo-pills.sm #duoOp.on { opacity: 1; background: #4ADE80; color: #0B2A5B; border-color: #0B2A5B; }
+#duoStatus.bad { color: #FFD43B !important; font-weight: 900; }
+.duo-vs { font-size: 20px; } .duo-vs i { font-style: normal; color: #FFD43B; font-family: 'Baloo 2', sans-serif; margin: 0 8px; }
+.duo-count { font-family: 'Baloo 2', sans-serif; font-size: 120px; line-height: 1; color: #fff; text-shadow: 0 6px 0 #0B2A5B; animation: slam .5s cubic-bezier(.2,.9,.3,1.6) both; }
+.duo-sent { color: #FFD43B !important; font-weight: 900 !important; }
+.duo-opline { margin-top: 6px; padding: 8px 16px; border-radius: 999px; background: #fff; color: #0B2A5B; font-weight: 900; border: 3px solid #0B2A5B; }
+.duo-score { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
+.duo-score > span { font-family: 'Baloo 2', sans-serif; font-size: 34px; }
+.duo-p { position: relative; display: grid; justify-items: center; flex: 1; max-width: 160px; padding: 12px 8px; border-radius: 20px; background: #fff; color: #0B2A5B; border: 3px solid #0B2A5B; box-shadow: 0 5px 0 #0B2A5B; }
+.duo-p.won { background: #FFD43B; }
+.duo-p small { font-weight: 900; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.duo-p b { font-family: 'Baloo 2', sans-serif; font-size: 44px; line-height: 1; }
+.duo-p span { font-size: 12px; font-weight: 800; color: #4A6283; }
+.duo-p i { position: absolute; top: -20px; font-style: normal; font-size: 28px; }
+.duo-taunt { width: 100%; box-sizing: border-box; background: #fff; color: #0B2A5B; border: 3px solid #0B2A5B; border-radius: 18px; padding: 14px 16px; font-weight: 800; line-height: 1.45; box-shadow: 0 5px 0 #0B2A5B; text-wrap: pretty; }
+.duo-taunt.win { background: #FFF4C2; } .duo-taunt.lose { background: #FFE3E3; }
+.duo-their { opacity: .75; }
+.pp-opt:disabled { cursor: default; }
+.mk .splash-btn { white-space: nowrap; font-size: 20px; padding-inline: 24px; }
