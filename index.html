@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sualtı</title>
+  <meta name="theme-color" content="#0A1F4D">
+  <link rel="icon" href="assets/logo-icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ocean" aria-hidden="true">
+    <div class="rays"></div>
+    <div class="bubbles" id="bubbles"></div>
+  </div>
+
+  <main class="stage">
+    <!-- Desktop: brend paneli -->
+    <section class="brand-panel">
+      <div class="brand-logo" id="brandLogo"></div>
+      <h1 class="chunky big">Sualın<br>dərinliyinə<br><span class="yellow">dal!</span></h1>
+      <p class="brand-sub">Azərbaycan dilində quiz: elmdən idmana, tarixdən folklora 10 fərqli linza. Hər düzgün cavab səni bir az da dərinə aparır.</p>
+      <ul class="brand-points">
+        <li><b>60</b> demo sual · <b>10</b> linza</li>
+        <li>Bilik və təxmin sualları, mənbəli izahlarla</li>
+        <li>Dərinlik səviyyələri, inci, seriya, liqa</li>
+      </ul>
+      <button class="sound-logo-btn" data-act="logo"><span class="play">▶</span> Səs loqosunu dinlə <small>“su · al · tı”</small></button>
+      <p class="credit">Demo · Şəkillər: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></p>
+    </section>
+
+    <!-- Tətbiq -->
+    <section class="phone">
+      <div class="app" id="app">
+        <header class="topbar" id="topbar"></header>
+        <div class="view" id="view"></div>
+        <nav class="tabbar" id="tabbar"></nav>
+      </div>
+      <div class="modal-layer" id="modal"></div>
+      <div class="splash" id="splash"></div>
+    </section>
+  </main>
+
+  <script src="questions.js"></script>
+  <script src="mascot.js"></script>
+  <script src="sound.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
