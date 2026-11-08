@@ -47,6 +47,7 @@
     crown: `<svg class="crown" viewBox="0 0 40 28"><path d="M3 8l8 7 9-12 9 12 8-7-3 18H6z" fill="#FFD43B" stroke="#0B2A5B" stroke-width="2.5" stroke-linejoin="round"/><circle cx="20" cy="17" r="3" fill="#FF7A59"/></svg>`,
     sparkle: `<svg class="sparkle" viewBox="0 0 24 24"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z" fill="#fff"/></svg>`,
     swords: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/><path d="M9.5 6.5L13 3h3v3l-3.5 3.5M5 14l-2 2 3 3 2-2"/></svg>`,
+    gem: `<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#FFD43B" stroke="#0B2A5B" stroke-width="2" stroke-linejoin="round"/><path d="M2 9h20M9 3 7 9l5 12 5-12-2-6" fill="none" stroke="#0B2A5B" stroke-width="1.6" stroke-linejoin="round"/></svg>`,
     lock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>`,
   };
   const AV_COLORS = ['#FF7A59', '#8B5CF6', '#10B981', '#F59E0B', '#EC4899', '#3B82F6', '#14B8A6', '#EF4444'];
@@ -65,6 +66,7 @@
     lensStats: { elm: [14, 11], tarix: [9, 6], cografiya: [12, 10], incesenet: [5, 3], edebiyyat: [8, 6], felsefe: [3, 2], medeniyyet: [10, 8], pop: [6, 5], idman: [4, 2], texnologiya: [7, 6], olkeler: [0, 0] },
     topicXP: { elm: 420, cografiya: 610, tarix: 180, medeniyyet: 300, bayraqlar: 90 },
     follows: ['cografiya', 'bayraqlar', 'elm'], seen: {}, duels: { w: 4, l: 2, d: 0 }, reports: [], league: true,
+    plus: false, duelDay: { d: '', n: 0 },
   });
   let S;
   try { S = Object.assign(DEFAULT(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEFAULT(); }
@@ -125,7 +127,7 @@
     if (FULL.includes(UI.screen)) { t.style.display = 'none'; return; }
     t.style.display = '';
     t.innerHTML = `
-      <div class="wordmark">${logoMark(40)}<span class="wordmark-text">sual<span class="t2">tı</span></span></div>
+      <div class="wordmark">${logoMark(40)}<span class="wordmark-text">sual<span class="t2">tı</span></span>${S.plus ? '<span class="plus-badge">PLUS</span>' : ''}</div>
       <div class="pills">
         <button class="pill snd" data-act="sound" aria-label="Səsi aç/bağla">${SFX.on ? ICON.sound : ICON.mute}</button>
         <span class="pill" title="Seriya">${ICON.streak}${S.streak}</span>
@@ -135,7 +137,7 @@
   function tabbar() {
     const tb = $('#tabbar');
     tb.classList.toggle('hidden', FULL.includes(UI.screen));
-    const cur = UI.screen === 'topic' ? 'topics' : UI.screen;
+    const cur = { topic: 'topics', plus: 'profile' }[UI.screen] || UI.screen;
     const tabs = [['home', 'Əsas', ICON.home], ['topics', 'Mövzular', ICON.grid], ['reef', 'Rifim', ICON.reef], ['board', 'Reytinq', ICON.trophy], ['profile', 'Profil', ICON.user]];
     tb.style.gridTemplateColumns = `repeat(${tabs.length}, 1fr)`;
     tb.innerHTML = tabs.map(([k, l, i]) => `<button class="tab ${cur === k ? 'active' : ''}" data-go="${k}">${i}<span>${l}</span></button>`).join('');
@@ -243,8 +245,13 @@
         </div>
         <button class="duel-cta" data-act="quickduel">
           <span class="duel-cta-flags">${['tr', 'jp', 'br'].map(c => flagSVG(c)).join('')}</span>
-          <span class="duel-cta-txt"><small>Canlı duel</small><b>Bayraq duelı</b><em>7 sual · 10 saniyə · sürət xalı</em></span>
+          <span class="duel-cta-txt"><small>Canlı duel</small><b>Bayraq duelı</b><em>7 sual · 10 saniyə · sürət xalı${S.plus ? ' · limitsiz' : ` · bu gün ${Math.max(0, duelsLeft())}/${FREE_DUELS} pulsuz`}</em></span>
           <span class="btn sm">Oyna</span>
+        </button>
+        <button class="party-cta" data-act="party">
+          <span class="party-cta-art"><span class="pq">▲</span><span class="pq">◆</span><span class="pq">●</span><span class="pq">■</span></span>
+          <span class="party-cta-txt"><small>Dostlarla · 2–50 nəfər</small><b>Party rejimi</b><em>QR ilə qoşul · 20 sual · uduzana cəza kartı</em></span>
+          <span class="btn sm white">Otaq aç</span>
         </button>
         <div class="h2">İzlədiyin mövzular <small data-go="topics">Hamısı →</small></div>
         <div class="scroller">${fol.map((t, i) => tile(t, i)).join('')}</div>
@@ -354,6 +361,39 @@
 
     duel() { return duelView(); },
 
+    plus() {
+      const rows = [
+        ['Bütün mövzular və suallar', '✓', '✓'], ['Gündəlik 20 sual', '✓', '✓'], ['Rif, seriya, liqa', '✓', '✓'],
+        ['Canlı duel', `gündə ${FREE_DUELS}`, 'limitsiz'], ['Seriya dondurması', 'həftədə 1', 'limitsiz'],
+        ['Ətraflı statistika (səhv etdiyin suallar, mövzu üzrə inkişaf)', '—', '✓'], ['Xüsusi rif canlıları və dekor', '—', '✓'],
+        ['Ailə planı (4 hesab)', '—', '✓'], ['Reklam', 'yalnız könüllü', 'heç vaxt'],
+      ];
+      return `
+        <button class="icon-btn back-inline" data-go="profile" aria-label="Geri">${ICON.back}</button>
+        <div class="plus-hero">
+          <div class="plus-hero-art">${mascot('party')}</div>
+          <h2 class="chunky mid">Sualtı <span class="yellow">Plus</span></h2>
+          <p>Dərinliyə limitsiz dal. Pulla qələbə yoxdur: Plus duel xalına təsir etmir.</p>
+        </div>
+        <div class="card plus-promise"><b>Mövzular kilidlənmir.</b> Bütün suallar və mövzular hamı üçün həmişə pulsuzdur. Plus rahatlıq və dərinlik verir, bilik satmır.</div>
+        <div class="tbl-plus"><table>
+          <tr><th></th><th>Pulsuz</th><th class="p">Plus</th></tr>
+          ${rows.map(([f, a, b]) => `<tr><td>${f}</td><td>${a}</td><td class="p">${b}</td></tr>`).join('')}
+        </table></div>
+        <div class="price-row">
+          <div class="price-card"><small>Aylıq</small><b>2.99 AZN</b><em>A testi</em></div>
+          <div class="price-card best"><span class="ribbon">2 ay pulsuz</span><small>İllik</small><b>29.90 AZN</b><em>ayda ~2.49 AZN</em></div>
+        </div>
+        <p class="muted sub" style="margin-top:8px">Qiymətlər demo və fərziyyədir; real qiymət A/B testi ilə seçiləcək.</p>
+        <button class="btn block ${S.plus ? 'white' : 'pulse'}" data-act="tryplus">${S.plus ? 'Plus-u söndür (demo)' : 'Plus-u sına — demo, ödəniş yoxdur'}</button>
+        <div class="h2">Komandalar üçün</div>
+        <div class="b2b">
+          <div class="card b2b-card"><b>🏫 Məktəblər</b><small>Sinif duelləri, müəllimin öz sualları, şagird hesabatları.</small></div>
+          <div class="card b2b-card"><b>🏢 Şirkətlər</b><small>Komanda quizləri, korporativ liqa, canlı final.</small></div>
+          <div class="card b2b-card"><b>📣 Sponsorlu mövzu</b><small>“Həftənin mövzusu — X ilə birlikdə”. Suallar neytral qalır, sponsor açıq yazılır.</small></div>
+        </div>`;
+    },
+
     reef() {
       const rows = LENSES.map(l => {
         const n = reefCount(l.slug), st = S.lensStats[l.slug] || [0, 0];
@@ -407,6 +447,10 @@
           <div><small class="muted" style="font-weight:800">Dalğıc</small><h3>Sən</h3>
             <small style="font-weight:800;color:#1E6BFF">${S.depth} m · ${z.cur.name}</small></div>
         </div>
+        <button class="plus-card" data-go="plus">
+          <span class="plus-gem">${ICON.gem}</span>
+          <span class="grow"><b>${S.plus ? 'Sualtı Plus aktivdir' : 'Sualtı Plus'}</b><small>${S.plus ? 'Limitsiz duel, ətraflı statistika, rif dekoru' : 'Limitsiz duel və dərinlik. Mövzular hamı üçün pulsuz qalır.'}</small></span>
+          <span class="plus-go">→</span></button>
         <div class="stats" style="margin-top:16px">
           <div class="card stat"><b>${S.duels.w}</b><small>duel qələbəsi</small></div>
           <div class="card stat"><b>${S.streak}</b><small>gün seriya</small></div>
@@ -506,8 +550,11 @@
 
   /* ════════════ CANLI DUEL (QuizUp ilhamlı: 7 sual, 10 san, sürət xalı, son sual ×2) ════════════ */
   const BOTS = [['Aysel', 'Bakı'], ['Tural', 'Gəncə'], ['Leyla', 'Şəki'], ['Murad', 'Gəncə'], ['Nigar', 'Sumqayıt'], ['Elvin', 'Lənkəran'], ['Günay', 'Quba'], ['Rauf', 'Naxçıvan'], ['Səbinə', 'Mingəçevir']];
-  const ROUNDS = 7, QTIME = 10, MAXP = ROUNDS * 20 + 20;
+  const ROUNDS = 7, QTIME = 10, MAXP = ROUNDS * 20 + 20, FREE_DUELS = 5;
+  function duelsLeft() { if (S.duelDay.d !== today()) S.duelDay = { d: today(), n: 0 }; return S.plus ? Infinity : FREE_DUELS - S.duelDay.n; }
   function startDuel(slug, opp) {
+    if (duelsLeft() <= 0) return showLimit();
+    if (!S.plus) { S.duelDay.n++; save(); }
     const myLv = level(S.topicXP[slug]).lvl;
     const b = opp || BOTS[Math.floor(Math.random() * BOTS.length)];
     const oLv = clamp(myLv + Math.floor(Math.random() * 3) - 1, 1, 12);
@@ -773,6 +820,15 @@
       ${['Cavab səhvdir', 'Sual köhnəlib', 'Yazı / orfoqrafiya səhvi', 'Bayraq və ya şəkil səhvdir', 'Başqa səbəb'].map(r => `<button class="sheet-opt" data-reason="${r}">${r}</button>`).join('')}
       <button class="btn white block" data-act="closeModal">Ləğv et</button></div>`;
   }
+  function showLimit() {
+    const m = $('#modal'); m.classList.add('open');
+    m.innerHTML = `<div class="modal-bg" data-act="closeModal"></div><div class="sheet">
+      <div class="sheet-mascot">${mascot('think')}</div>
+      <h3>Bu günün ${FREE_DUELS} pulsuz duelı bitdi</h3>
+      <p class="muted">Sabah yenə ${FREE_DUELS} duel. Gündəlik 20 sual, tək oyun və rif isə limitsizdir.</p>
+      <button class="btn block" data-act="openplus">Plus ilə limitsiz duel</button>
+      <button class="btn white block" data-act="closeModal">Sabaha qədər gözləyərəm</button></div>`;
+  }
   function closeModal() { const m = $('#modal'); m.classList.remove('open'); m.innerHTML = ''; }
   async function share() {
     const Q = UI.quiz, ok = Q.res.filter(Boolean).length;
@@ -825,6 +881,9 @@
       enter: () => enterApp(),
       logo: () => { SFX.play('logo'); const mk = $('.brand-logo .logo-mark'); mk && (mk.classList.remove('ping'), void mk.offsetWidth, mk.classList.add('ping')); },
       closeModal: () => closeModal(),
+      party: () => window.Party && Party.host(),
+      openplus: () => { closeModal(); go('plus'); },
+      tryplus: () => { S.plus = !S.plus; save(); toast(S.plus ? 'Plus aktivdir (demo) — duellər limitsizdir' : 'Plus söndürüldü (demo)'); render(); },
     };
     acts[a] && acts[a]();
   });
