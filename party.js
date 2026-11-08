@@ -211,15 +211,21 @@
       p.gain = p.ans === q.a ? pts(p.ms) : 0; p.score += p.gain;
       if (p.ans === q.a) p.right = (p.right || 0) + 1;
       (p.log || (p.log = [])).push({ q: q.q, correct: q.opts[q.a], mine: p.ans == null ? null : q.opts[p.ans], ok: p.ans === q.a });
-      send(p, { t: 'wait', n: (H.qi % ROUND) + 1, total: ROUND });
+      send(p, { t: 'wait', n: (H.qi % ROUND) + 1, total: ROUND, ok: p.ans === q.a, answered: p.ans != null, correct: q.opts[q.a] });
     });
     // Suallar arasında heç bir nəticə göstərilmir — hamısı oyunun sonunda açılır
     const last = (H.qi + 1) % ROUND === 0 || H.qi + 1 >= H.qs.length;
     document.querySelectorAll('.ph-opt').forEach(el => el.disabled = true);
+    const me = H.players.get('host');
+    // Hər oyunçu yalnız öz cavabının düz/səhv olduğunu görür; xal və reytinq sonda açılır
+    if (me) {
+      document.querySelectorAll('.ph-opt').forEach((el, j) => el.classList.add(j === q.a ? 'right' : j === me.ans ? 'wrongpick' : 'dim'));
+      sfx(me.ans === q.a ? 'correct' : 'wrong');
+    } else sfx('swoosh');
     const box = document.querySelector('.ph-q');
-    if (box) box.insertAdjacentHTML('beforeend', `<div class="ph-between">${last ? 'Nəticələr hesablanır… 🏆' : 'Növbəti sual gəlir… 🫧'}</div>`);
-    sfx('swoosh');
-    H.timers.push(setTimeout(() => (last ? final() : nextQ()), 1600));
+    const verdict = me ? (me.ans === q.a ? '<b class="v-ok">✓ Düzdür!</b>' : me.ans == null ? '<b class="v-no">⏱ Vaxt bitdi</b>' : '<b class="v-no">✗ Səhv</b>') : '';
+    if (box) box.insertAdjacentHTML('beforeend', `<div class="ph-between">${verdict}<span>${last ? 'Nəticələr hesablanır… 🏆' : 'Növbəti sual gəlir… 🫧'}</span></div>`);
+    H.timers.push(setTimeout(() => (last ? final() : nextQ()), me ? 2400 : 1600));
   }
   function final() {
     clearT(); H.phase = 'final';
@@ -329,8 +335,11 @@
     }
     if (d.t === 'wait') {
       clearInterval(J.tick);
-      pscreen(`<div class="pp-logo">${mascot('think')}</div><h2>Növbəti sual gəlir…</h2><p>Nəticələr oyunun sonunda açılacaq.</p>
-        <div class="pp-wait"><i></i><i></i><i></i></div><p class="pp-small">${d.n}/${d.total}</p>`);
+      sfx(d.ok ? 'correct' : 'wrong');
+      pscreen(`<div class="pp-res ${d.ok ? 'ok' : 'no'}"><div class="pp-big">${d.ok ? '✓' : d.answered ? '✗' : '⏱'}</div>
+        <h2>${d.ok ? 'Düzdür!' : d.answered ? 'Səhv' : 'Vaxt bitdi'}</h2>
+        ${d.ok ? '' : `<p>Düzgün cavab: <b>${esc(d.correct)}</b></p>`}
+        <p class="pp-small">Xallar və reytinq oyunun sonunda açılacaq · ${d.n}/${d.total}</p></div>`, d.ok ? 'ok' : 'no');
     }
     if (d.t === 'end') {
       sfx(d.rank === 1 ? 'fanfare' : 'logo');

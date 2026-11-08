@@ -1061,3 +1061,8 @@ button.ph-opt:not(:disabled):active { transform: translateY(3px); box-shadow: 0 
 .pp-tr + .pp-tr { border-top: 1.5px solid #E5EEF9; }
 .pp-tr span { color: var(--muted); font-family: var(--display); } .pp-tr em { font-style: normal; color: var(--blue); font-size: 13px; }
 .pp-tr strong { font-family: var(--display); text-align: right; } .pp-tr.me { background: #FFF6CC; }
+.ph-between { display: grid; gap: 4px; justify-items: center; }
+.ph-between b { font-size: 30px; } .ph-between .v-ok { color: #86EFAC; } .ph-between .v-no { color: #FDA4AF; }
+.ph-between span { font-size: 16px; opacity: .9; }
+.ph-opt.wrongpick { opacity: 1; box-shadow: 0 0 0 5px #FF4D6A, 0 6px 0 var(--navy); }
+.ph-opt.right { opacity: 1 !important; }
