@@ -9,13 +9,9 @@
   const PEER_JS = 'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';
   const QR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
   const ROUND = 20, QSEC = 20, FREE_ROUNDS = 1;
-  const SHAPES = [['tri', '#FF5A6E'], ['dia', '#1E6BFF'], ['cir', '#F5B400'], ['sq', '#22A55E']];
-  const shape = (k, s = 30) => ({
-    tri: `<svg viewBox="0 0 24 24" width="${s}" height="${s}"><path d="M12 3 22 20H2z" fill="#fff"/></svg>`,
-    dia: `<svg viewBox="0 0 24 24" width="${s}" height="${s}"><path d="M12 2 22 12 12 22 2 12z" fill="#fff"/></svg>`,
-    cir: `<svg viewBox="0 0 24 24" width="${s}" height="${s}"><circle cx="12" cy="12" r="10" fill="#fff"/></svg>`,
-    sq: `<svg viewBox="0 0 24 24" width="${s}" height="${s}"><rect x="3" y="3" width="18" height="18" rx="3" fill="#fff"/></svg>`,
-  }[k]);
+  // Variant nişanları: Sualtının öz canlıları (Kahoot fiqurları yox)
+  const MARKS = [['shell', '#FF7A59', 'Balıqqulağı'], ['fish', '#14B8D6', 'Balıq'], ['jelly', '#8B5CF6', 'Meduza'], ['star', '#F5A700', 'Ulduz']];
+  const mark = (j, s = 34) => `<span class="cre" style="width:${s}px;height:${s}px">${window.creatureSVG ? creatureSVG(MARKS[j][0], '#FFFFFF') : ''}</span>`;
   const DARES = [
     'Qrupa bir mahnının nəqəratını oxu 🎤', '10 saniyə robot kimi rəqs et 🤖', 'Növbəti çayı sən dəmlə ☕',
     'Hər kəsə bir kompliment de 💐', 'Bir dəqiqə yalnız şeirlə danış 📜', 'Qalibi 3 dəfə ucadan təriflə 🏆',
@@ -41,7 +37,8 @@
   let H = null;
   function host() {
     const A = window.__sualti;
-    H = { code: code6(), peer: null, online: false, players: new Map(), phase: 'lobby', topic: 'mix', dares: true, qs: [], qi: -1, rounds: 0, timers: [] };
+    H = { code: code6(), peer: null, online: false, players: new Map(), phase: 'lobby', topic: 'mix', dares: true, hostPlays: true, hostName: 'Host', qs: [], qi: -1, rounds: 0, timers: [] };
+    syncHostPlayer();
     renderHost();
     loadScript(PEER_JS).then(() => openRoom()).catch(() => offline('Əlaqə kitabxanası yüklənmədi.'));
     loadScript(QR_JS).then(drawQR).catch(() => {});
@@ -62,6 +59,10 @@
     } catch (e) { offline('Bu mühitdə canlı əlaqə qurulmadı.'); }
   }
   function offline(msg) { H.online = false; H.offlineMsg = msg; renderLobbyStatus(); }
+  function syncHostPlayer() {
+    if (H.hostPlays) { const old = H.players.get('host'); H.players.set('host', { id: 'host', name: H.hostName || 'Host', me: true, score: old ? old.score : 0, color: '#0EA5E9' }); }
+    else H.players.delete('host');
+  }
   function onPlayerMsg(conn, d) {
     if (!d || !d.t) return;
     if (d.t === 'join') {
@@ -108,6 +109,8 @@
           <div class="ph-set card">
             <label>Mövzu<select id="phTopic">${topics.map(([v, n]) => `<option value="${v}" ${v === H.topic ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select></label>
             <label class="ph-check"><input type="checkbox" id="phDares" ${H.dares ? 'checked' : ''}> Ən az xal toplayana cəza kartı</label>
+            <div class="ph-hostplay"><label class="ph-check"><input type="checkbox" id="phHostPlays" ${H.hostPlays ? 'checked' : ''}> Mən də bu ekrandan oynayıram</label>
+              <input id="phHostName" maxlength="16" value="${esc(H.hostName)}" aria-label="Sənin adın" ${H.hostPlays ? '' : 'hidden'}></div>
             <p class="ph-note">${ROUND} sual · hər suala ${QSEC} saniyə · tez cavab = çox xal</p>
           </div>
           <div class="ph-actions">
@@ -118,6 +121,8 @@
       </div>`;
     $('#phTopic').onchange = e => H.topic = e.target.value;
     $('#phDares').onchange = e => H.dares = e.target.checked;
+    $('#phHostPlays').onchange = e => { H.hostPlays = e.target.checked; $('#phHostName').hidden = !H.hostPlays; syncHostPlayer(); renderPlayers(); };
+    $('#phHostName').oninput = e => { H.hostName = e.target.value.trim() || 'Host'; syncHostPlayer(); renderPlayers(); };
     drawQR(); renderLobbyStatus(); renderPlayers();
   }
   function drawQR() {
@@ -135,7 +140,7 @@
     const L = $('#phList'), c = $('#phCount'), st = $('#phStart'); if (!L) return;
     const ps = live();
     c.textContent = ps.length;
-    L.innerHTML = ps.length ? ps.map(p => `<span class="ph-chip" style="--c:${p.color}">${esc(p.name)}${p.bot ? ' 🤖' : ''}</span>`).join('') : '<p class="ph-empty">Oyunçular qoşulduqca burada görünəcək…</p>';
+    L.innerHTML = ps.length ? ps.map(p => `<span class="ph-chip" style="--c:${p.color}">${esc(p.name)}${p.bot ? ' 🤖' : ''}${p.me ? ' 🖥️' : ''}</span>`).join('') : '<p class="ph-empty">Oyunçular qoşulduqca burada görünəcək…</p>';
     st.disabled = ps.length < 2;
   }
   function addBots() {
@@ -167,10 +172,10 @@
       <div class="ph-q">
         <div class="ph-qtop"><span class="ph-qn">Sual ${inRound}/${ROUND}</span>
           <div class="ph-timer"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" class="ring-bg"/><circle cx="24" cy="24" r="20" class="ring-fg" id="phRing"/></svg><b id="phSec">${QSEC}</b></div>
-          <span class="ph-ans"><b id="phAns">0</b>/${live().length} cavab</span></div>
+          <span class="ph-ans"><b id="phAns">0</b>/${live().length} cavab<em class="ph-mine" id="phMine" hidden>✓ Sənin cavabın qəbul olundu</em></span></div>
         <div class="ph-qcard card">${q.flag && !q.flagSmall && window.flagSVG ? `<div class="ph-flag">${flagSVG(q.flag, 'flip-in')}</div>` : ''}
           <h2>${q.flagSmall && q.flag && window.flagSVG ? flagSVG(q.flag, 'inline-flag') : ''}${esc(q.q)}</h2></div>
-        <div class="ph-opts">${q.opts.map((o, j) => `<div class="ph-opt" style="--c:${SHAPES[j][1]}" data-j="${j}">${shape(SHAPES[j][0])}<span>${esc(o)}</span><i class="ph-bar"></i><em class="ph-cnt"></em></div>`).join('')}</div>
+        <div class="ph-opts">${q.opts.map((o, j) => `<button type="button" class="ph-opt" style="--c:${MARKS[j][1]};animation-delay:${j * .08}s" data-p="hostans" data-c="${j}" ${H.hostPlays ? '' : 'disabled'}>${mark(j, 46)}<span class="ot">${esc(o)}</span></button>`).join('')}</div>
       </div>`;
     live().forEach(p => sendQuestion(p));
     const ring = $('#phRing'), C = 2 * Math.PI * 20; ring.style.strokeDasharray = C;
@@ -192,7 +197,7 @@
   }
   function sendQuestion(p) {
     const q = H.qs[H.qi];
-    send(p, { t: 'q', qi: H.qi, n: (H.qi % ROUND) + 1, total: ROUND, q: q.q, opts: q.opts, sec: QSEC, left: Math.max(1, QSEC - (performance.now() - H.t0) / 1000) });
+    send(p, { t: 'q', qi: H.qi, n: (H.qi % ROUND) + 1, total: ROUND, q: q.q, opts: q.opts, flag: q.flag || null, flagSmall: !!q.flagSmall, sec: QSEC, left: Math.max(1, QSEC - (performance.now() - H.t0) / 1000) });
   }
   function updateAnswered() {
     const ps = live(), n = ps.filter(p => p.ans != null).length;
@@ -202,48 +207,40 @@
   function reveal() {
     if (H.phase !== 'q') return; H.phase = 'reveal'; clearT();
     const q = H.qs[H.qi], ps = live();
-    const counts = [0, 0, 0, 0];
     ps.forEach(p => {
-      if (p.ans != null) counts[p.ans]++;
       p.gain = p.ans === q.a ? pts(p.ms) : 0; p.score += p.gain;
+      if (p.ans === q.a) p.right = (p.right || 0) + 1;
+      (p.log || (p.log = [])).push({ q: q.q, correct: q.opts[q.a], mine: p.ans == null ? null : q.opts[p.ans], ok: p.ans === q.a });
+      send(p, { t: 'wait', n: (H.qi % ROUND) + 1, total: ROUND });
     });
-    const ranked = ps.slice().sort((a, b) => b.score - a.score);
-    ps.forEach(p => send(p, { t: 'reveal', ok: p.ans === q.a, answered: p.ans != null, gain: p.gain, score: p.score, rank: ranked.indexOf(p) + 1, of: ps.length, correct: q.opts[q.a] }));
-    const max = Math.max(1, ...counts);
-    document.querySelectorAll('.ph-opt').forEach((el, j) => {
-      el.classList.add(j === q.a ? 'right' : 'dim');
-      el.querySelector('.ph-bar').style.width = (counts[j] / max * 100) + '%';
-      el.querySelector('.ph-cnt').textContent = counts[j];
-    });
-    sfx('correct');
-    H.timers.push(setTimeout(() => board(ranked), 3200));
-  }
-  function board(ranked) {
-    H.phase = 'board';
-    const last = (H.qi + 1) % ROUND === 0;
-    $('#phBody').innerHTML = `
-      <div class="ph-board">
-        <h2 class="chunky mid">Reytinq</h2>
-        <div class="ph-rank">${ranked.slice(0, 6).map((p, i) => `<div class="ph-row" style="animation-delay:${i * .08}s;--c:${p.color}">
-          <span class="n">${i + 1}</span><b>${esc(p.name)}</b>${p.gain ? `<em>+${p.gain}</em>` : '<em class="z">+0</em>'}<span class="s">${p.score}</span></div>`).join('')}</div>
-        <button class="btn" data-p="next">${last ? 'Nəticələr 🏆' : 'Növbəti sual →'}</button>
-      </div>`;
-    H.timers.push(setTimeout(() => hostAct(last ? 'final' : 'next'), last ? 6000 : 5000));
+    // Suallar arasında heç bir nəticə göstərilmir — hamısı oyunun sonunda açılır
+    const last = (H.qi + 1) % ROUND === 0 || H.qi + 1 >= H.qs.length;
+    document.querySelectorAll('.ph-opt').forEach(el => el.disabled = true);
+    const box = document.querySelector('.ph-q');
+    if (box) box.insertAdjacentHTML('beforeend', `<div class="ph-between">${last ? 'Nəticələr hesablanır… 🏆' : 'Növbəti sual gəlir… 🫧'}</div>`);
+    sfx('swoosh');
+    H.timers.push(setTimeout(() => (last ? final() : nextQ()), 1600));
   }
   function final() {
     clearT(); H.phase = 'final';
     const ranked = live().slice().sort((a, b) => b.score - a.score);
-    const loser = ranked[ranked.length - 1];
+    const minS = ranked[ranked.length - 1].score, lows = ranked.filter(p => p.score === minS);
+    const loser = lows[Math.floor(Math.random() * lows.length)]; // bərabər xalda təsadüfi
     const dare = DARES[Math.floor(Math.random() * DARES.length)];
-    ranked.forEach((p, i) => send(p, { t: 'end', rank: i + 1, of: ranked.length, score: p.score, loser: H.dares && p === loser, dare: H.dares ? dare : null, loserName: loser.name }));
+    const nQ = Math.min(H.qs.length, H.qi + 1);
+    const table = ranked.map(p => ({ name: p.name, score: p.score, right: p.right || 0, color: p.color }));
+    ranked.forEach((p, i) => send(p, { t: 'end', rank: i + 1, of: ranked.length, score: p.score, right: p.right || 0, nQ, table, log: (p.log || []).slice(-ROUND), loser: H.dares && p === loser, dare: H.dares ? dare : null, loserName: loser.name }));
     const pod = (p, r) => p ? `<div class="ph-pod p${r}" style="--c:${p.color}"><span class="ph-pav">${esc(p.name[0])}</span><b>${esc(p.name)}</b><small>${p.score}</small><div class="blk">${r}</div></div>` : '';
     $('#phBody').innerHTML = `
       <div class="ph-final">
         <h2 class="chunky big">${esc(ranked[0].name)} qalib gəldi!</h2>
         <div class="ph-podium">${pod(ranked[1], 2)}${pod(ranked[0], 1)}${pod(ranked[2], 3)}</div>
+        <div class="ph-rank ph-full">${ranked.map((p, i) => `<div class="ph-row" style="animation-delay:${.6 + i * .07}s;--c:${p.color}">
+          <span class="n">${i + 1}</span><b>${esc(p.name)}${p.bot ? ' 🤖' : ''}</b><em>${p.right || 0}/${nQ} düz</em><span class="s">${p.score}</span></div>`).join('')}</div>
         ${H.dares ? `<div class="ph-dare" id="phDare">
           <div class="ph-dare-in"><div class="ph-dare-front">🎴<b>Cəza kartı</b><small>Ən az xal: ${esc(loser.name)} (${loser.score})</small></div>
           <div class="ph-dare-back"><small>${esc(loser.name)}, sənin cəzan:</small><b>${esc(dare)}</b></div></div></div>` : ''}
+        ${H.players.get('host') ? `<details class="pp-log ph-mylog"><summary>Cavablarıma bax</summary>${(H.players.get('host').log || []).slice(-ROUND).map((r, i) => `<div class="pp-lr ${r.ok ? 'y' : 'n'}"><span>${i + 1}</span><p>${esc(r.q)}<small>${r.ok ? '✓ ' + esc(r.correct) : `✗ ${r.mine ? esc(r.mine) : 'cavab yox'} · düz: ${esc(r.correct)}`}</small></p></div>`).join('')}</details>` : ''}
         <div class="ph-actions">
           <button class="btn" data-p="more">+${ROUND} sual daha</button>
           <button class="btn white" data-p="again">Yeni oyun</button>
@@ -270,13 +267,17 @@
     const acts = {
       close: () => { clearT(); try { H.peer && H.peer.destroy(); } catch (e) {} $('#party').remove(); H = null; },
       bots: () => addBots(),
-      start: () => { if (live().length >= 2) { H.qs = []; H.qi = -1; H.rounds = 0; live().forEach(p => p.score = 0); startRound(); } },
-      next: () => { if (H.phase === 'board') nextQ(); },
-      final: () => { if (H.phase === 'board') final(); },
+      hostans: () => {
+        const me = H.players.get('host'); if (!me || H.phase !== 'q' || me.ans != null) return;
+        me.ans = +el.dataset.c; me.ms = performance.now() - H.t0; sfx('tap');
+        const m = $('#phMine'); if (m) m.hidden = false;
+        updateAnswered();
+      },
+      start: () => { if (live().length >= 2) { H.qs = []; H.qi = -1; H.rounds = 0; live().forEach(p => { p.score = 0; p.right = 0; p.log = []; }); startRound(); } },
       more: () => morePaywall(),
       buy: () => { H.bought = (H.bought || 0) + 1; document.querySelector('.ph-modal')?.remove(); startRound(); },
       nobuy: () => document.querySelector('.ph-modal')?.remove(),
-      again: () => { clearT(); live().forEach(p => { p.score = 0; send(p, { t: 'welcome', name: p.name, phase: 'lobby' }); }); H.qs = []; H.qi = -1; H.rounds = 0; lobby(); },
+      again: () => { clearT(); live().forEach(p => { p.score = 0; p.right = 0; p.log = []; send(p, { t: 'welcome', name: p.name, phase: 'lobby' }); }); H.qs = []; H.qi = -1; H.rounds = 0; lobby(); },
     };
     acts[a] && acts[a]();
   }
@@ -316,27 +317,33 @@
   function pscreen(html, cls = '') { const o = $('#party'); o.className = 'party player ' + cls; o.innerHTML = `<div class="pp">${html}</div>`; }
   function onHostMsg(d) {
     if (!d || !d.t) return;
-    if (d.t === 'welcome') { sfx('correct'); pscreen(`<div class="pp-logo">${mascot('party')}</div><h2>Sən içəridəsən, ${esc(d.name)}!</h2><p>Böyük ekrana bax. Host oyunu başladanda suallar burada görünəcək.</p><div class="pp-wait"><i></i><i></i><i></i></div>`); }
+    if (d.t === 'welcome') { sfx('correct'); pscreen(`<div class="pp-logo">${mascot('party')}</div><h2>Sən içəridəsən, ${esc(d.name)}!</h2><p>Otağı açan oyunu başladanda suallar burada görünəcək.</p><div class="pp-wait"><i></i><i></i><i></i></div>`); }
     if (d.t === 'q') {
       J.qi = d.qi; J.locked = false;
       pscreen(`<div class="pp-qtop"><span>Sual ${d.n}/${d.total}</span><span class="pp-sec" id="ppSec">${Math.ceil(d.left)}</span></div>
-        <p class="pp-q">${esc(d.q)}</p>
-        <div class="pp-opts">${d.opts.map((o, j) => `<button class="pp-opt" data-j="ans" data-c="${j}" style="--c:${SHAPES[j][1]}">${shape(SHAPES[j][0], 34)}<span>${esc(o)}</span></button>`).join('')}</div>`, 'q');
+        ${d.flag && !d.flagSmall && window.flagSVG ? `<div class="pp-flag">${flagSVG(d.flag)}</div>` : ''}
+        <p class="pp-q">${d.flag && d.flagSmall && window.flagSVG ? flagSVG(d.flag, 'inline-flag') : ''}${esc(d.q)}</p>
+        <div class="pp-opts">${d.opts.map((o, j) => `<button type="button" class="pp-opt" data-j="ans" data-c="${j}" style="--c:${MARKS[j][1]};animation-delay:${j * .06}s">${mark(j, 40)}<span class="ot">${esc(o)}</span></button>`).join('')}</div>`, 'q');
       const end = performance.now() + d.left * 1000;
       clearInterval(J.tick); J.tick = setInterval(() => { const s = $('#ppSec'); if (!s) return clearInterval(J.tick); s.textContent = Math.max(0, Math.ceil((end - performance.now()) / 1000)); }, 250);
     }
-    if (d.t === 'reveal') {
+    if (d.t === 'wait') {
       clearInterval(J.tick);
-      if (d.ok) sfx('correct'); else sfx('wrong');
-      pscreen(`<div class="pp-res ${d.ok ? 'ok' : 'no'}"><div class="pp-big">${d.ok ? '✓' : d.answered ? '✗' : '⏱'}</div>
-        <h2>${d.ok ? 'Düzdür!' : d.answered ? 'Səhv' : 'Vaxt bitdi'}</h2><p class="pp-gain">${d.ok ? '+' + d.gain : 'Düzgün: ' + esc(d.correct)}</p>
-        <p>Xalın: <b>${d.score}</b> · Sıran: <b>${d.rank}/${d.of}</b></p></div>`, d.ok ? 'ok' : 'no');
+      pscreen(`<div class="pp-logo">${mascot('think')}</div><h2>Növbəti sual gəlir…</h2><p>Nəticələr oyunun sonunda açılacaq.</p>
+        <div class="pp-wait"><i></i><i></i><i></i></div><p class="pp-small">${d.n}/${d.total}</p>`);
     }
     if (d.t === 'end') {
       sfx(d.rank === 1 ? 'fanfare' : 'logo');
-      pscreen(d.loser
-        ? `<div class="pp-logo">${mascot('wow')}</div><h2>Cəza sənə düşdü! 😅</h2><div class="pp-dare">${esc(d.dare)}</div><p>Xalın: ${d.score} · ${d.rank}/${d.of}</p>`
-        : `<div class="pp-logo">${mascot(d.rank <= 3 ? 'party' : 'happy')}</div><h2>${d.rank === 1 ? 'Qalib sənsən! 🏆' : `${d.rank}-ci yer`}</h2><p>Xalın: <b>${d.score}</b> · ${d.of} oyunçudan</p>${d.dare ? `<p class="pp-small">Cəza ${esc(d.loserName)}-a düşdü: ${esc(d.dare)}</p>` : ''}`, 'end');
+      const head = d.loser
+        ? `<div class="pp-logo">${mascot('wow')}</div><h2>Cəza sənə düşdü! 😅</h2><div class="pp-dare">${esc(d.dare)}</div>`
+        : `<div class="pp-logo">${mascot(d.rank <= 3 ? 'party' : 'happy')}</div><h2>${d.rank === 1 ? 'Qalib sənsən! 🏆' : `${d.rank}-ci yer`}</h2>`;
+      const pod = (r, k) => r ? `<div class="pp-pod p${k}"><span style="--c:${r.color}">${esc(r.name[0])}</span><b>${esc(r.name)}</b><small>${r.score}</small><i>${k}</i></div>` : '';
+      const T = d.table || [];
+      pscreen(`${head}<div class="pp-podium">${pod(T[1], 2)}${pod(T[0], 1)}${pod(T[2], 3)}</div>
+        <div class="pp-table">${T.map((r, i) => `<div class="pp-tr ${i + 1 === d.rank ? 'me' : ''}"><span>${i + 1}</span><b>${esc(r.name)}</b><em>${r.right}/${d.nQ}</em><strong>${r.score}</strong></div>`).join('')}</div>
+        <div class="pp-stats"><div><b>${d.score}</b><small>xal</small></div><div><b>${d.right}/${d.nQ}</b><small>düz</small></div><div><b>${d.rank}/${d.of}</b><small>yer</small></div></div>
+        ${!d.loser && d.dare ? `<p class="pp-small">Cəza ${esc(d.loserName)}-a düşdü: ${esc(d.dare)}</p>` : ''}
+        <details class="pp-log"><summary>Cavablarıma bax</summary>${(d.log || []).map((r, i) => `<div class="pp-lr ${r.ok ? 'y' : 'n'}"><span>${i + 1}</span><p>${esc(r.q)}<small>${r.ok ? '✓ ' + esc(r.correct) : `✗ ${r.mine ? esc(r.mine) : 'cavab yox'} · düz: ${esc(r.correct)}`}</small></p></div>`).join('')}</details>`, 'end');
     }
   }
   function playerAct(a, el) {
@@ -344,7 +351,7 @@
       J.locked = true; const c = +el.dataset.c;
       J.conn && J.conn.send({ t: 'ans', qi: J.qi, choice: c }); sfx('tap');
       document.querySelectorAll('.pp-opt').forEach((b, j) => b.classList.add(j === c ? 'picked' : 'off'));
-      const q = document.querySelector('.pp-q'); q && (q.textContent = 'Cavab göndərildi! Ekrana bax ⏳');
+      const q = document.querySelector('.pp-q'); q && (q.textContent = 'Cavab göndərildi ✓ Digərləri cavab verir…');
     }
     if (a === 'retry') join(J.code);
   }

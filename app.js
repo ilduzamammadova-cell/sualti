@@ -249,7 +249,7 @@
           <span class="btn sm">Oyna</span>
         </button>
         <button class="party-cta" data-act="party">
-          <span class="party-cta-art"><span class="pq">▲</span><span class="pq">◆</span><span class="pq">●</span><span class="pq">■</span></span>
+          <span class="party-cta-art">${['shell', 'fish', 'jelly', 'star'].map(k => `<span class="pq">${creatureSVG(k, '#fff')}</span>`).join('')}</span>
           <span class="party-cta-txt"><small>Dostlarla · 2–50 nəfər</small><b>Party rejimi</b><em>QR ilə qoşul · 20 sual · uduzana cəza kartı</em></span>
           <span class="btn sm white">Otaq aç</span>
         </button>
@@ -906,6 +906,7 @@
       <div class="splash-bubbles">${Array.from({ length: 14 }, (_, i) => `<i style="left:${5 + i * 6.7}%;animation-delay:${(i % 5) * .12}s;width:${10 + (i * 7) % 22}px;height:${10 + (i * 7) % 22}px"></i>`).join('')}</div>`;
   })();
 
+  window.creatureSVG = creatureSVG;
   window.__sualti = { get S() { return S; }, ALLQ, TOPICS, UI }; // demo/test üçün
   render();
 })();
