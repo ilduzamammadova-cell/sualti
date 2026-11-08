@@ -29,6 +29,7 @@
   // Canlı dost dueli: ?oyun=1&duel=KOD&f=Çağıran&t=Çağırılan (duo.js)
   const DUO = (() => { try { const u = new URLSearchParams(location.search), c = u.get('duel');
     return CH && c ? { code: c.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8), f: clip(u.get('f')) || 'Dostun' } : null; } catch (e) { return null; } })();
+  const ROOM = (() => { try { const r = new URLSearchParams(location.search).get('otaq'); return CH && r ? r.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12) || null : null; } catch (e) { return null; } })();
   const chItems = () => { const byId = Object.fromEntries(ALLQ.map(q => [q.id, q])); return CH.items.map(x => x.ref ? byId[x.ref] : x).filter(Boolean); };
   function startChallenge() { startQuiz(chItems(), CH.title, false, CH_KEY); }
   const chLink = () => `${location.origin}${location.pathname}?oyun=${encodeURIComponent(CH_KEY)}`;
@@ -522,6 +523,7 @@
     try { sessionStorage.setItem('sualti-entered', '1'); } catch (e) {}
     SFX.play('logo');
     if (!window.Duo) return toast('Duel modulu yüklənmədi');
+    if (role === 'room') return Duo.room({ code: ROOM, name: UI.duoNames.t, key: CH_KEY, items: chItems() });
     if (role === 'join') Duo.join({ code: DUO.code, f: DUO.f, t: UI.duoNames.t, key: CH_KEY, items: chItems() });
     else Duo.host({ f: UI.duoNames.f, key: CH_KEY, items: chItems() });
   }
@@ -949,7 +951,7 @@
         if (!t) { $('#jnErr').hidden = false; $('#jnName').focus(); return; }
         UI.duoNames = { t };
         try { localStorage.setItem('sualti-name', t); } catch (er) {}
-        openDuo('join');
+        openDuo(ROOM ? 'room' : 'join');
       },
       logo: () => { SFX.play('logo'); const mk = $('.brand-logo .logo-mark'); mk && (mk.classList.remove('ping'), void mk.offsetWidth, mk.classList.add('ping')); },
       closeModal: () => closeModal(),
@@ -974,7 +976,15 @@
     sp.innerHTML = `<div class="splash-rays"></div><div class="splash-in">
         <div class="splash-mascot">${mascot('happy')}</div>
         <div class="chunky big splash-word">sual<span class="yellow">tı</span></div>
-        ${DUO ? `<p class="splash-hey">Hey! 👋</p>
+        ${ROOM && !DUO ? `<p class="splash-hey">Duel otağı ⚔️</p>
+          <div class="splash-ch"><b>Canlı quiz dueli</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span>
+          <span class="splash-note">Linki açan iki nəfər eyni anda, eyni suallara cavab verir</span></div>
+          <form class="mk" autocomplete="off" onsubmit="return false">
+            <label>Adını yaz<input id="jnName" maxlength="24" placeholder="Adın" value="${esc((() => { try { return localStorage.getItem('sualti-name') || ''; } catch (e) { return ''; } })())}"></label>
+            <p class="mk-err" id="jnErr" hidden>Adını yaz 🙂</p>
+            <button type="button" class="btn pulse splash-btn" data-act="duojoin">Otağa gir ⚔️</button>
+          </form>`
+        : DUO ? `<p class="splash-hey">Hey! 👋</p>
           <div class="splash-ch"><b>${esc(DUO.f)} səni canlı quiz duelinə çağırır ⚔️</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span>
           <span class="splash-note">İkiniz eyni anda, eyni suallara cavab verəcəksiniz</span></div>
           <form class="mk" autocomplete="off" onsubmit="return false">

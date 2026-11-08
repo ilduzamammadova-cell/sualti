@@ -99,13 +99,15 @@
   }
   const clearT = () => { if (!G) return; G.timers.forEach(t => { clearTimeout(t); clearInterval(t); }); G.timers = []; };
   const send = m => { try { G && G.conn && G.conn.open && G.conn.send(m); } catch (e) {} };
-  const link = () => `${location.origin}${location.pathname}?oyun=${encodeURIComponent(G.key)}&duel=${G.code}&f=${encodeURIComponent(G.me)}`;
+  const link = () => G.room
+    ? `${location.origin}${location.pathname}?oyun=${encodeURIComponent(G.key)}&otaq=${G.code}`
+    : `${location.origin}${location.pathname}?oyun=${encodeURIComponent(G.key)}&duel=${G.code}&f=${encodeURIComponent(G.me)}`;
   const qPayload = (q, i) => ({ i, n: i + 1, total: G.qs.length, q: q.q, opts: q.opts, flag: q.flag || null, flagSmall: !!q.flagSmall });
 
   /* ════════ ÇAĞIRAN (host) ════════ */
-  function host({ f, key, items }) {
+  function host({ f, key, items, room, onTaken }) {
     close(true);
-    G = { role: 'host', me: f, op: 'Rəqib', key, base: items.filter(q => q.kind !== 'e' && q.opts), code: code5(), timers: [], conn: null, peer: null, phase: 'wait', opIn: false };
+    G = { role: 'host', me: f, op: 'Rəqib', key, base: items.filter(q => q.kind !== 'e' && q.opts), code: room || code5(), room: !!room, onTaken, timers: [], conn: null, peer: null, phase: 'wait', opIn: false };
     waitScreen();
     loadScript(PEER_JS).then(() => openRoom()).catch(() => waitStatus('Əlaqə kitabxanası yüklənmədi. İnterneti yoxla.', true));
   }
@@ -114,6 +116,7 @@
       const peer = new Peer('sualti-duo-' + G.code, { debug: 0 }); G.peer = peer;
       peer.on('open', () => { G.online = true; waitScreen(); });
       peer.on('error', e => {
+        if (e.type === 'unavailable-id' && G.room) { peer.destroy(); const cb = G.onTaken; G.closing = true; G = null; return cb && cb(); } // otaq artıq açıqdır: qoşul
         if (e.type === 'unavailable-id' && tries < 3) { peer.destroy(); G.code = code5(); openRoom(tries + 1); }
         else if (!G.online) waitStatus('Canlı əlaqə qurulmadı. Səhifəni yenilə və yenidən cəhd et.', true);
       });
@@ -130,7 +133,7 @@
     const ready = G.online;
     screen(`<div class="pp-logo">${window.mascot ? mascot('think') : ''}</div>
       <h2>Duel otağı ${ready ? 'hazırdır' : 'açılır…'}</h2>
-      <p>Linki dostuna göndər. O, adını yazıb “Qəbul et” deyəndə burada görəcəksən.</p>
+      <p>${G.room ? 'Otaqdasan. Dostun bu linki açıb adını yazanda burada görəcəksən.' : 'Linki dostuna göndər. O, adını yazıb “Qəbul et” deyəndə burada görəcəksən.'}</p>
       ${ready ? `<div class="duo-link"><span id="duoLink">${esc(link())}</span></div>
       <button class="btn block" data-d="share">Linki göndər 🔗</button>
       <button class="btn white block" data-d="copy">Linki kopyala</button>` : '<div class="pp-wait"><i></i><i></i><i></i></div>'}
@@ -197,19 +200,20 @@
   /* ════════ ÇAĞIRILAN (guest) ════════ */
   function join({ code, f, t }) {
     close(true);
-    G = { role: 'guest', me: t || 'Mən', op: f || 'Dostun', code, timers: [], conn: null, peer: null, phase: 'join' };
+    G = { role: 'guest', me: t || 'Mən', op: f, code, timers: [], conn: null, peer: null, phase: 'join' };
     screen(`<div class="pp-logo">${window.mascot ? mascot('happy') : ''}</div><h2>Qoşulur…</h2>
-      <p>${esc(G.op)} ilə əlaqə qurulur</p><div class="pp-wait"><i></i><i></i><i></i></div><p class="pp-small" id="duoStatus"></p>`);
+      <p>${G.op ? esc(G.op) + ' ilə əlaqə qurulur' : 'Duel otağına qoşulursan'}</p><div class="pp-wait"><i></i><i></i><i></i></div><p class="pp-small" id="duoStatus"></p>`);
     loadScript(PEER_JS).then(() => {
       G.peer = new Peer({ debug: 0 });
       G.peer.on('open', () => {
         G.conn = G.peer.connect('sualti-duo-' + G.code, { reliable: true });
         G.conn.on('open', () => send({ t: 'hello', name: G.me }));
+        G.timers.push(setTimeout(() => fail('Bağlantı qurulmadı. Bəzi mobil internetlərdə bu olur. İkiniz də Wi-Fi-a qoşulub yenidən cəhd edin.'), 20000));
         G.conn.on('data', onHost);
         G.conn.on('close', lost);
       });
       G.peer.on('error', e => fail(e.type === 'peer-unavailable'
-        ? `Duel otağı tapılmadı. ${esc(G.op)} duel səhifəsini bağlamış ola bilər. Ondan yeni link istə.`
+        ? `Duel otağı tapılmadı. ${esc(G.op || 'Dostun')} duel səhifəsini bağlamış ola bilər. Ondan yeni link istə.`
         : 'Qoşulmaq alınmadı. İnterneti yoxla və yenidən cəhd et.'));
     }).catch(() => fail('Əlaqə kitabxanası yüklənmədi. İnterneti yoxla.'));
   }
@@ -221,8 +225,9 @@
   function onHost(d) {
     if (!d || !d.t) return;
     if (d.t === 'busy') { G.phase = 'join'; return fail('Bu duelə artıq başqası qoşulub.'); }
+    if (d.t === 'bye') return lost();
     if (d.t === 'hi') {
-      G.op = d.host || G.op; G.phase = 'accepted'; sfx('correct');
+      clearT(); G.op = d.host || G.op; G.phase = 'accepted'; sfx('correct');
       screen(`<div class="pp-logo">${window.mascot ? mascot('party') : ''}</div><h2>Qəbul etdin ✓</h2>
         <p>${esc(G.op)} ${da(G.op)} qəbul edən kimi duel başlayacaq.</p>
         <div class="duo-pills"><span>⏳ ${esc(G.op)}</span><span class="on">✓ ${esc(G.me)}</span></div>
@@ -283,7 +288,7 @@
     if (!G || G.phase === 'end' || G.closing) return;
     clearT(); G.phase = 'lost';
     screen(`<div class="pp-logo">${window.mascot ? mascot('sad') : ''}</div><h2>Əlaqə kəsildi 😕</h2>
-      <p>${esc(G.op)} oyundan çıxdı və ya internet kəsildi.</p><button class="btn white block" data-d="close">Bağla</button>`);
+      <p>${esc(G.op || "Rəqib")} oyundan çıxdı və ya internet kəsildi.</p><button class="btn white block" data-d="close">Bağla</button>`);
   }
   function close(silent) {
     if (G) { G.closing = true; clearT(); if (!silent) send({ t: 'bye' }); try { G.peer && G.peer.destroy(); } catch (e) {} }
@@ -321,5 +326,9 @@
     if (a === 'retry') { const g = G; return join({ code: g.code, f: g.op, t: g.me }); }
     if (a === 'close') { close(false); if (window.__sualti) history.replaceState(null, '', location.pathname); }
   }
-  window.Duo = { host, join, _state: () => G }; // _state: yalnız test üçün
+  // Hazır otaq linki (?otaq=KOD): linki birinci açan otağı açır, ikinci açan qoşulur
+  function room({ code, name, key, items }) {
+    host({ f: name, key, items, room: code, onTaken: () => join({ code, f: '', t: name }) });
+  }
+  window.Duo = { host, join, room, _state: () => G }; // _state: yalnız test üçün
 })();
