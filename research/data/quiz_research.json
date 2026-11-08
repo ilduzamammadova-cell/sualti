@@ -1,0 +1,1392 @@
+{
+ "apps": {
+  "Trivia Crack": {
+   "id": "com.etermax.preguntados.lite",
+   "title": "Trivia Crack: Brain Quiz Games",
+   "developer": "etermax",
+   "installs": "100,000,000+",
+   "score": 4.453275,
+   "ratings": 7841248,
+   "price": 0,
+   "offersIAP": true,
+   "containsAds": true,
+   "genre": "Trivia",
+   "released": "Oct 24, 2013",
+   "updated": "Nov 4, 2026",
+   "reviews_n": 400,
+   "complaints_n": 312,
+   "avg_recent": 2.12,
+   "categories": [
+    [
+     "Reklamlar",
+     215
+    ],
+    [
+     "Qiymət / Abunə",
+     28
+    ],
+    [
+     "Xətalar / Çökmə",
+     14
+    ],
+    [
+     "UX / Dizayn",
+     9
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     9
+    ],
+    [
+     "Fırıldaq / Botlar",
+     8
+    ],
+    [
+     "Təkrar suallar",
+     7
+    ],
+    [
+     "Çətinlik balansı",
+     5
+    ],
+    [
+     "Kontent / Kateqoriya",
+     5
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     5
+    ],
+    [
+     "Sual keyfiyyəti",
+     5
+    ],
+    [
+     "Funksiya istəyi",
+     5
+    ],
+    [
+     "Can / Enerji limiti",
+     4
+    ],
+    [
+     "Sosial / Söhbət",
+     3
+    ]
+   ],
+   "examples": {
+    "Can / Enerji limiti": [
+     "when you load in they give you a question against someone and a unskipable ad so you run out of time before you get to answer it. I miss how the game use to look now it's just confusing",
+     "wdym there's \"energy\" and you can't answer questions unlimitedly????? This game sucks now excessive ADs and way too many useless features. jfc",
+     "timer between getting new lives is corrupt. keeps counting down and restarting without giving a new life so it says at 0/25. and can someone make it so after a few days the completed games dissappear please."
+    ],
+    "UX / Dizayn": [
+     "when you load in they give you a question against someone and a unskipable ad so you run out of time before you get to answer it. I miss how the game use to look now it's just confusing",
+     "game is fun and well designed ads after every round too much and a monthly subscription to get rid of them",
+     "The UI and the ads are designed to be as annoying as possible."
+    ],
+    "Reklamlar": [
+     "Read the reviews and won't redownload because of the Ads. Thanks guys",
+     "it has to many ads, and they are really long",
+     "In 2015 I gave this game 5 stars but now it only deserves 1 star. Very frustrating with all the ads and the ads are extremely long. I really use to love this game 😞"
+    ],
+    "Təkrar suallar": [
+     "ads require 2 or 3 timers forcing you to watch and 3 or 4 precise clicks to exit. sometimes the ads repeat and are not able to be skipped. if you don't click it will never exit the ads. game is just a tool to feed you ads. junk."
+    ],
+    "Qiymət / Abunə": [
+     "so many Ads and stupid notifications. cant turn them off without turning off the notification that it's your turn to play. not playable any more. Stop offering to give 3 days of free premium play, makes you seem more of a D-Bag.",
+     "They made the game pay to win and monetized it way too hard. Not fun to play anymore.",
+     "I purchased this game a few years ago so I could be ad free... apparently now that purchase is null and void and I now have to sign up for a monthly subscription to be ad free. And they play an ad after every other question. not worth it. game ruined."
+    ],
+    "Çətinlik balansı": [
+     "They made the game pay to win and monetized it way too hard. Not fun to play anymore.",
+     "impossible to play, too many ads, both for the ingame store and for other games.",
+     "Its too easy to win. just watch ads. also annoying there's subscriptions on top of subscriptions in this game."
+    ],
+    "Xətalar / Çökmə": [
+     "Almost every update made it worse and worse, now, after the latest update, there are many features doesn't work, congratulations",
+     "use to love this game. anymore you're lucky if you get to play one round before it freezes up and you loose everything",
+     "after it did update my apps went nuts can't play on them not happy!!! If I could put no stars I would Trivia Crack is not working for me AT ALL NOT HAPPY"
+    ],
+    "Rəqib tapma / Multiplayer": [
+     "Love the game, hate the pop ups. Far too many notifications and I'm just playing friends. Please provide an option to just make it simplified",
+     "waaaaay to many ads. this game also tends to open your browser to some random malware/scam sites. really weird google allows this game on their platform. some, if not all, of the random players youre playing against are obviously not real.",
+     "its fun but the challenge to steal thing is annoying even if you tie with your opponent and failed the bonus question you still lose character"
+    ],
+    "Fırıldaq / Botlar": [
+     "Long Unskippable Ads. First time I went through an ad that forced me to the Google store, I decided I was going to uninstall. Thought I would have some nostalgic fun, but nah, I'm good",
+     "Don't bother installing. too many ads that it's fricking unplayable. uninstalld within 5 mins.",
+     "impossible to play, too many ads, both for the ingame store and for other games."
+    ],
+    "Kontent / Kateqoriya": [
+     "full of ads. questions are boring and easy. unplayable",
+     "I downloaded it to play The Floor but the category words cover up the clue and it's hard to see so I'm uninstalling.",
+     "so bloated with non-trivia related side content."
+    ],
+    "Sosial / Söhbət": [
+     "If you don't start paying after the free trial you get blocked from using or redownloading the app.",
+     "the last few updates are killing the game.. gold has become useless, and you are pushed to buy tickets to get bonuses (very expensive). But worse than anything, they removed the in game chat function..."
+    ],
+    "Hesab / Proqres itkisi": [
+     "this is a good app but why did they always disbanded your account",
+     "i guess they didnt like the question i submitted so they resteicted my account. petty bs. deleting this app.",
+     "no straightforward way to delete your account and data"
+    ],
+    "Sual keyfiyyəti": [
+     "Updated review: the ads now force you to go to the app store, back into the app, press a skip button, and then press an X to get out of the ad. Absolutely insane. I would give this zero stars if I could. You get ads after every incorrect answer.",
+     "I feel as if you can't do anything without an add and in the first 10 questions I have already gotten 2 questions with incorrect answers as the answer."
+    ],
+    "Funksiya istəyi": [
+     "wish I could give 0 stars. so many ads. dumb questions. too many side games. tried to play 5 minutes, 20 ads and still not done with \"tutorials\". SELL. OUTS. definitely not what it used to be.",
+     "Wish the game had no ads because I enjoy playing it"
+    ]
+   },
+   "praise": [
+    [
+     "fun",
+     13
+    ],
+    [
+     "friends",
+     3
+    ],
+    [
+     "learn",
+     3
+    ],
+    [
+     "challeng",
+     2
+    ],
+    [
+     "brain",
+     2
+    ],
+    [
+     "kids",
+     1
+    ]
+   ]
+  },
+  "Kahoot!": {
+   "id": "no.mobitroll.kahoot.android",
+   "title": "Kahoot! Play & Create Quizzes",
+   "developer": "Kahoot!",
+   "installs": "100,000,000+",
+   "score": 4.7397804,
+   "ratings": 859645,
+   "price": 0,
+   "offersIAP": true,
+   "containsAds": false,
+   "genre": "Education",
+   "released": "Nov 1, 2012",
+   "updated": "Oct 29, 2026",
+   "reviews_n": 400,
+   "complaints_n": 117,
+   "avg_recent": 3.87,
+   "categories": [
+    [
+     "Qiymət / Abunə",
+     20
+    ],
+    [
+     "Xətalar / Çökmə",
+     18
+    ],
+    [
+     "Çətinlik balansı",
+     4
+    ],
+    [
+     "Funksiya istəyi",
+     4
+    ],
+    [
+     "Kontent / Kateqoriya",
+     4
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     3
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     3
+    ],
+    [
+     "Fırıldaq / Botlar",
+     2
+    ],
+    [
+     "Sual keyfiyyəti",
+     1
+    ],
+    [
+     "Sosial / Söhbət",
+     1
+    ],
+    [
+     "Təkrar suallar",
+     1
+    ],
+    [
+     "UX / Dizayn",
+     1
+    ]
+   ],
+   "examples": {
+    "Qiymət / Abunə": [
+     "fk your stupid paywalls, not buying your subscription, everything else i pay for is expensive enough!!!",
+     "why this app not supporting in Hindi , s Sanskrit language in the subscription are not the regional pricing",
+     "why are most features cashgrab?? honestly i think it was fun using this app but now its genuinely boring with these paywalls"
+    ],
+    "Çətinlik balansı": [
+     "It is too hard to make a quiz !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!😡😡😡😡😡😡😡😡😡😡😤😤😡😤😤😤🤬🤬🤬🤬🤬🤬👿👿👿👿👿.",
+     "An Unfair game! Every time my class hosts a quiz, some other person gets first every time because even if I answer on the 7th number, it shows 111th place. I am very disappointed by this app."
+    ],
+    "Xətalar / Çökmə": [
+     "i will edit this soon... but its stuck at 99% downloading... Ugh",
+     "the game is so laggy, especially on iphone and infinix,i cant even make a quiz based on this,do not download,this is a ripoff",
+     "i lost a prize because this app Glitchy Asf. I hate This App."
+    ],
+    "Hesab / Proqres itkisi": [
+     "it won't let me log in. I've resetted my password TWICE. I have them saved, screenshotted and I know they're correct, but still your app won't let me log in. And now I can't make quizzes."
+    ],
+    "Sual keyfiyyəti": [
+     "makes it's wrong even when answers are right"
+    ],
+    "Rəqib tapma / Multiplayer": [],
+    "Funksiya istəyi": [
+     "the only reason I downloaded this was because I watch beluga, it's good, but I'm probably gonna delete to add more games",
+     "we play this app in skl its fun but boring i wish it would be sm i would enjoy playing but overall its an alr app no hate to the devs!",
+     "Good day Kahoot, could you please add a ramdomizer for the question? Thank You..."
+    ],
+    "Kontent / Kateqoriya": [
+     "why are most features cashgrab?? honestly i think it was fun using this app but now its genuinely boring with these paywalls",
+     "we play this app in skl its fun but boring i wish it would be sm i would enjoy playing but overall its an alr app no hate to the devs!"
+    ],
+    "Fırıldaq / Botlar": [],
+    "Sosial / Söhbət": [],
+    "Təkrar suallar": [],
+    "UX / Dizayn": []
+   },
+   "praise": [
+    [
+     "fun",
+     35
+    ],
+    [
+     "learn",
+     17
+    ],
+    [
+     "friends",
+     7
+    ],
+    [
+     "family",
+     5
+    ],
+    [
+     "kids",
+     4
+    ],
+    [
+     "educat",
+     2
+    ],
+    [
+     "streak",
+     1
+    ]
+   ]
+  },
+  "QuizDuel!": {
+   "id": "se.maginteractive.quizduel2",
+   "title": "QuizDuel! Quiz & Trivia Game",
+   "developer": "MAG Interactive",
+   "installs": "10,000,000+",
+   "score": 3.48,
+   "ratings": 116463,
+   "price": 0,
+   "offersIAP": true,
+   "containsAds": true,
+   "genre": "Trivia",
+   "released": "Feb 27, 2020",
+   "updated": "Oct 23, 2026",
+   "reviews_n": 400,
+   "complaints_n": 318,
+   "avg_recent": 2.02,
+   "categories": [
+    [
+     "Reklamlar",
+     134
+    ],
+    [
+     "Qiymət / Abunə",
+     41
+    ],
+    [
+     "Xətalar / Çökmə",
+     27
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     19
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     13
+    ],
+    [
+     "Kontent / Kateqoriya",
+     9
+    ],
+    [
+     "Fırıldaq / Botlar",
+     7
+    ],
+    [
+     "Sosial / Söhbət",
+     6
+    ],
+    [
+     "UX / Dizayn",
+     6
+    ],
+    [
+     "Sual keyfiyyəti",
+     6
+    ],
+    [
+     "Çətinlik balansı",
+     5
+    ],
+    [
+     "Can / Enerji limiti",
+     4
+    ],
+    [
+     "Təkrar suallar",
+     3
+    ],
+    [
+     "Funksiya istəyi",
+     1
+    ]
+   ],
+   "examples": {
+    "Reklamlar": [
+     "Too much ads, too much notifications, too much spam!",
+     "INSANE AMOUNT OF ADS. makes it impossible to enjoy",
+     "too many ads during playtime especially duels"
+    ],
+    "Fırıldaq / Botlar": [
+     "Die App verbreitet Malware über Werbeanzeigen. Es öffnet sich bspw eine als Google-Hinweis getarnte Nachricht \"Ihr Android würde gehackt\", die einen dazu verleiten soll, darauf zu klicken. Vom Betreiber ist so etwas unverantwortlich.",
+     "I paid for premium, but they changed the name of the app.. my account is still the same but what I paid for is gone. väldigt dålig stil, if I write my actual opinion on the practice Google blocks my review.",
+     "full of bots, and the questions extremely hard"
+    ],
+    "Çətinlik balansı": [
+     "INSANE AMOUNT OF ADS. makes it impossible to enjoy",
+     "Fine at first, then ramps up the difficulty significantly in order for you to lose and have to spend money for resources to continue playing."
+    ],
+    "Xətalar / Çökmə": [
+     "I seem to have a strange glitch when I pressed play, it does the card flipping sound effect, but doesn't even display what category it is. I've experienced it for 2 days now and it is getting annoying. Please fix it.",
+     "way too many ads. I spend more time watching ads than playing any game. App is also very slow and requires too many clicks to start a game. Pity, it used to be a good app.",
+     "Game stuck at a blue screen on launch. Maybe it's because my device is rooted but still not cool."
+    ],
+    "Kontent / Kateqoriya": [
+     "I seem to have a strange glitch when I pressed play, it does the card flipping sound effect, but doesn't even display what category it is. I've experienced it for 2 days now and it is getting annoying. Please fix it.",
+     "the game still in 2020. There aren't new questions.",
+     "Bloated and full of ads. Some questions are fun, many questions are really boring."
+    ],
+    "Qiymət / Abunə": [
+     "I paid for premium, but they changed the name of the app.. my account is still the same but what I paid for is gone. väldigt dålig stil, if I write my actual opinion on the practice Google blocks my review.",
+     "I can't unsubscribe and this game is taking my money. Bad",
+     "Fine at first, then ramps up the difficulty significantly in order for you to lose and have to spend money for resources to continue playing."
+    ],
+    "Hesab / Proqres itkisi": [
+     "I paid for premium, but they changed the name of the app.. my account is still the same but what I paid for is gone. väldigt dålig stil, if I write my actual opinion on the practice Google blocks my review.",
+     "Server connection problem. Can't login to game",
+     "new version does not work I have a username that consists of two words with a space between them. The new version no longer allows spaces during login, so I can no longer log in."
+    ],
+    "Sosial / Söhbət": [
+     "I paid for premium, but they changed the name of the app.. my account is still the same but what I paid for is gone. väldigt dålig stil, if I write my actual opinion on the practice Google blocks my review.",
+     "Hahaha die Scam-Werbung softlocked mich und zwingt mich zum schließen der App... Ohne Werbeblocker ist das nicht zu ertragen",
+     "the game is good fun but the app blocks by suggesting I try some other game in the middle and this is not optional, all other controls are disabled!!! Advertising is fine in a free app of course but forcing users to follow ad recommendation?"
+    ],
+    "Rəqib tapma / Multiplayer": [
+     "Fun to play against friends but all those different game modes and rewards are super annoying. A plain game like it used to be is more fun.",
+     "forcing me to play multiple rounds of a gamemode I dont care about just to be able to keep playing the game I have started with friends. horribly slow, full of useless features and generally fairly Buggy.",
+     "I kinda like this game but the only problem is the notifications. Everytime I played against an opponent after like 3 rounds I have to wait until I get a notification telling me it's my turn but I had to wait for a long time telling me it's my turn."
+    ],
+    "Təkrar suallar": [
+     "Most ad-plagued game I've ever seen. Used to be great (years ago under a different name), now there's literally ads after every 3 questions (So like 15 seconds of playtime, 30 seconds of ads - repeat until boredom). Shame."
+    ],
+    "UX / Dizayn": [
+     "dark design patterns wo man nur hinschaut. Wiederlich!",
+     "Uff, soo bad. User interface is beyond bad and complicated. Would defo not recommend"
+    ],
+    "Sual keyfiyyəti": [
+     "Got a paid version still shows ads every 2 seconds, horrible. Also incorrect questions are never corrected despite multiple request, this app is an absolute scam. I'm appalled, wish I could give 0 stars",
+     "If I could give no stars, I would. This app makes you pay for every new level, and to move forward whenever you get a question wrong. Do not download, look for another app."
+    ],
+    "Can / Enerji limiti": [
+     "Forced to watch ads due to not having energy or coins to play. Coins can be bought with real money. Game = not fun.",
+     "Quinder just started today, but it won't load. I used up my 3 lives and nothing happened, no questions. It just sat there, spinning....... disappointed 😞"
+    ],
+    "Funksiya istəyi": [
+     "Got a paid version still shows ads every 2 seconds, horrible. Also incorrect questions are never corrected despite multiple request, this app is an absolute scam. I'm appalled, wish I could give 0 stars"
+    ]
+   },
+   "praise": [
+    [
+     "fun",
+     11
+    ],
+    [
+     "learn",
+     4
+    ],
+    [
+     "educat",
+     2
+    ],
+    [
+     "friends",
+     2
+    ],
+    [
+     "family",
+     2
+    ],
+    [
+     "challeng",
+     1
+    ],
+    [
+     "addict",
+     1
+    ]
+   ]
+  },
+  "Trivia Star": {
+   "id": "com.trivia.star.android",
+   "title": "TRIVIA STAR Quiz Games Offline",
+   "developer": "Super Free",
+   "installs": "10,000,000+",
+   "score": 4.763632,
+   "ratings": 397711,
+   "price": 0,
+   "offersIAP": true,
+   "containsAds": true,
+   "genre": "Trivia",
+   "released": "Mar 3, 2020",
+   "updated": "Oct 16, 2026",
+   "reviews_n": 400,
+   "complaints_n": 123,
+   "avg_recent": 3.87,
+   "categories": [
+    [
+     "Reklamlar",
+     68
+    ],
+    [
+     "Kontent / Kateqoriya",
+     5
+    ],
+    [
+     "Xətalar / Çökmə",
+     5
+    ],
+    [
+     "Çətinlik balansı",
+     4
+    ],
+    [
+     "Sual keyfiyyəti",
+     3
+    ],
+    [
+     "Qiymət / Abunə",
+     3
+    ],
+    [
+     "Fırıldaq / Botlar",
+     3
+    ],
+    [
+     "Təkrar suallar",
+     2
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     2
+    ],
+    [
+     "UX / Dizayn",
+     1
+    ],
+    [
+     "Sosial / Söhbət",
+     1
+    ]
+   ],
+   "examples": {
+    "Reklamlar": [
+     "Questions are too easy, no difficulty setting. Only 3-4 questions at a time is boring. Ads after every set of questions is a bit excessive.",
+     "I can barely play this game due to the obnoxious amount of ads.",
+     "full length ads every 3 questions. unbearable"
+    ],
+    "Sual keyfiyyəti": [],
+    "Kontent / Kateqoriya": [
+     "Questions are too easy, no difficulty setting. Only 3-4 questions at a time is boring. Ads after every set of questions is a bit excessive.",
+     "Waste of time. every 3 questions there's an ad. One of the questions was \"what do you use to cook food\" a preschooler would find this boring.",
+     "Fun, as long as you choose a category with questions you know the answers to!"
+    ],
+    "Çətinlik balansı": [
+     "Questions are too easy, no difficulty setting. Only 3-4 questions at a time is boring. Ads after every set of questions is a bit excessive.",
+     "an ad after every question and way too easy game is so annoying",
+     "Too easy. Too much commercials time. WAY too easy"
+    ],
+    "Qiymət / Abunə": [
+     "you and spousey poo have fun with your forced ads. instead of having the player help you with the money o those ads have your spousey get a job",
+     "Greedy app, too many ads , mobile gaming is so dead with its toxic and vile money grabbing ways. It's a quiz game.. do i need an advertisement every three questions? also £10 to remove ads having a laugh. anyway uninstalled."
+    ],
+    "Fırıldaq / Botlar": [
+     "Utter trash, dont bother, ask 3 question', then a 3 minute adver, just a total disgrace. zero stars"
+    ],
+    "Təkrar suallar": [],
+    "Xətalar / Çökmə": [
+     "slop. asked me what bees make (honey for anyone who is interested) and then showed me an ad for \"magic sort\". mobile gaming is a plague and you are making it worse",
+     "Bad experience, the game doesn't want me to play by at least 8 ads I need to close before playing. plus even with 300 mbps internet, the app is loading very slowly. unfriendly UI not suitable for games.",
+     "i'm really getting tired of this app crashing and when it reopens it kicks me out of the special level I'm in and it doesn't offer me that category again. your game really sucks..."
+    ],
+    "UX / Dizayn": [
+     "Too many ads and the questions aren't well-written. also, the interface looks cheap, like it was vibe coded with ai."
+    ],
+    "Sosial / Söhbət": [
+     "Greedy app, too many ads , mobile gaming is so dead with its toxic and vile money grabbing ways. It's a quiz game.. do i need an advertisement every three questions? also £10 to remove ads having a laugh. anyway uninstalled."
+    ],
+    "Rəqib tapma / Multiplayer": [
+     "Bad experience, the game doesn't want me to play by at least 8 ads I need to close before playing. plus even with 300 mbps internet, the app is loading very slowly. unfriendly UI not suitable for games."
+    ]
+   },
+   "praise": [
+    [
+     "fun",
+     76
+    ],
+    [
+     "brain",
+     23
+    ],
+    [
+     "challeng",
+     18
+    ],
+    [
+     "learn",
+     9
+    ],
+    [
+     "educat",
+     7
+    ],
+    [
+     "categor",
+     6
+    ],
+    [
+     "relax",
+     5
+    ],
+    [
+     "addict",
+     4
+    ]
+   ]
+  },
+  "Millionaire 2026": {
+   "id": "com.submarineapps.mill",
+   "title": "Millionaire 2026 Quiz & Trivia",
+   "developer": "Quiz & Trivia Games by Submarine Apps",
+   "installs": "100,000,000+",
+   "score": 4.4468083,
+   "ratings": 374591,
+   "price": 0,
+   "offersIAP": false,
+   "containsAds": true,
+   "genre": "Trivia",
+   "released": "May 23, 2019",
+   "updated": "Nov 5, 2026",
+   "reviews_n": 400,
+   "complaints_n": 103,
+   "avg_recent": 4.02,
+   "categories": [
+    [
+     "Reklamlar",
+     11
+    ],
+    [
+     "Xətalar / Çökmə",
+     10
+    ],
+    [
+     "Sual keyfiyyəti",
+     9
+    ],
+    [
+     "Qiymət / Abunə",
+     5
+    ],
+    [
+     "Çətinlik balansı",
+     2
+    ],
+    [
+     "Fırıldaq / Botlar",
+     2
+    ],
+    [
+     "Kontent / Kateqoriya",
+     1
+    ],
+    [
+     "Təkrar suallar",
+     1
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     1
+    ]
+   ],
+   "examples": {
+    "Reklamlar": [
+     "I love this app and I paid for it and I am seeing a bunch of ads. Can't even play the game for all the ads.",
+     "I paid for this app and now I'm seeing ads? That's the whole point of paying. Greed (Response to your reply: You used to! You had an ad free option to purchase for $6.99.. which I paid. I'll be requesting a refund for that.)",
+     "very bad game never play again !!!!!!?!!!!! so many ads in this game ? what is this \"\"TRIVA\"\". you can do more better 🙂 but still it's good, I am not telling it's very bad 🎀 thank you"
+    ],
+    "Xətalar / Çökmə": [
+     "This game is horrible I don't even know if when you go to the shop and buy something real if it is real or not and if you actually get it in real life in the game is so glitchy it's terrible I would not recommend it only if you like glitchy games and have fun",
+     "Utter greed from the developers. Ad every single time. Not worth it unistalling and downloading the better one. Money grabbers as normal. I run apps before you say anything just money hungry 1/10",
+     "IDK if this was a bug or what, but the ad covered 3 choices (one being the amswe) The question was something like \"What color is this object (I don't remember which one) is it Red Blue Yellow or green\" but an ad covered blue yellow and green"
+    ],
+    "Kontent / Kateqoriya": [],
+    "Qiymət / Abunə": [
+     "I paid for this app and now I'm seeing ads? That's the whole point of paying. Greed (Response to your reply: You used to! You had an ad free option to purchase for $6.99.. which I paid. I'll be requesting a refund for that.)",
+     "Utter greed from the developers. Ad every single time. Not worth it unistalling and downloading the better one. Money grabbers as normal. I run apps before you say anything just money hungry 1/10",
+     "The questions are good, but the money not real."
+    ],
+    "Sual keyfiyyəti": [
+     "too many USA sports and kids movies questions. also some answers are just wrong. like musk invented Tesla. and others. uninstalled",
+     "Since the last \"update\" the game went from enjoyable to pathetic. Not allowing the correct answers to be given after a wrong answer was a bad move. This used to be an educational game for my grandson but not anymore.",
+     "It's great, but it got a question wrong. Apparently, spaghetti was invented in China. 😑"
+    ],
+    "Təkrar suallar": [
+     "I CAN'T PLAY THE GAME ,ONCE I GO INTO A AD IT KEEPS REPEATING THE AD, I HAD TO LOG OUT JUST TOO GO THROUGH IT ALL OVER AGAIN WHEN I REINSTALLED, IT JUST KEEP HAPPENING."
+    ],
+    "Çətinlik balansı": [],
+    "Fırıldaq / Botlar": [
+     "Stopped working offline, I was able to play it during bus/airplain trips, now I can't, it force me to have active data. Edit: Your issue is with google play games it refuses to login if no active connection."
+    ],
+    "Hesab / Proqres itkisi": [
+     "Stopped working offline, I was able to play it during bus/airplain trips, now I can't, it force me to have active data. Edit: Your issue is with google play games it refuses to login if no active connection."
+    ]
+   },
+   "praise": [
+    [
+     "fun",
+     33
+    ],
+    [
+     "brain",
+     15
+    ],
+    [
+     "challeng",
+     8
+    ],
+    [
+     "learn",
+     6
+    ],
+    [
+     "educat",
+     5
+    ],
+    [
+     "family",
+     2
+    ],
+    [
+     "categor",
+     1
+    ],
+    [
+     "addict",
+     1
+    ]
+   ]
+  },
+  "Quiz Planet": {
+   "id": "com.lotum.quizplanet",
+   "title": "Quiz Planet",
+   "developer": "Lotum one GmbH",
+   "installs": "5,000,000+",
+   "score": 4.331384,
+   "ratings": 64523,
+   "price": 0,
+   "offersIAP": false,
+   "containsAds": true,
+   "genre": "Trivia",
+   "released": "Aug 9, 2019",
+   "updated": "Nov 4, 2026",
+   "reviews_n": 400,
+   "complaints_n": 110,
+   "avg_recent": 4.0,
+   "categories": [
+    [
+     "Reklamlar",
+     28
+    ],
+    [
+     "Xətalar / Çökmə",
+     19
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     17
+    ],
+    [
+     "Sual keyfiyyəti",
+     6
+    ],
+    [
+     "Fırıldaq / Botlar",
+     5
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     5
+    ],
+    [
+     "Təkrar suallar",
+     3
+    ],
+    [
+     "Funksiya istəyi",
+     3
+    ],
+    [
+     "Sosial / Söhbət",
+     3
+    ],
+    [
+     "Çətinlik balansı",
+     3
+    ],
+    [
+     "Kontent / Kateqoriya",
+     3
+    ],
+    [
+     "Qiymət / Abunə",
+     2
+    ],
+    [
+     "UX / Dizayn",
+     1
+    ]
+   ],
+   "examples": {
+    "Reklamlar": [
+     "Lately, I get ads that you can't get rid of unless you close the whole game out, thereby losing your second chance to answer the question. Unacceptable!",
+     "commercials cause glitches in the game often times skipping entire questions on me and saying I timed out while im waiting for the commercial to end.",
+     "Far too many adverts . really spoils the game"
+    ],
+    "Təkrar suallar": [],
+    "Xətalar / Çökmə": [
+     "having problems it's glitching stopping working, missing out on games because it just stops working. stuck in a loop can't get back to the quiz, stuck with a game I can't get rid of",
+     "commercials cause glitches in the game often times skipping entire questions on me and saying I timed out while im waiting for the commercial to end.",
+     "normally love the game but it freezes sometimes and if you shut the app it just marks the answers as incorrect, this is a massive flaw and should just let you void the attemp and let you replay it"
+    ],
+    "Funksiya istəyi": [
+     "having problems it's glitching stopping working, missing out on games because it just stops working. stuck in a loop can't get back to the quiz, stuck with a game I can't get rid of",
+     "not bad a bit fast I wish it gave more thinking time tricky if you don't have friends",
+     "love the game, but keep experiencing glitches where it gets stuck in the ad, I can't continue, and have to shut down, thus missing the question"
+    ],
+    "Sosial / Söhbət": [],
+    "Rəqib tapma / Multiplayer": [
+     "not bad a bit fast I wish it gave more thinking time tricky if you don't have friends",
+     "commercials cause glitches in the game often times skipping entire questions on me and saying I timed out while im waiting for the commercial to end.",
+     "my other games on here are gone. I love this game but my friend don't want to play. there should be a way to play with others that aren't friends with me."
+    ],
+    "Sual keyfiyyəti": [
+     "normally love the game but it freezes sometimes and if you shut the app it just marks the answers as incorrect, this is a massive flaw and should just let you void the attemp and let you replay it",
+     "Something is wrong with my game, it's selecting the answers before as soon as the question comes up, and then it counts it as wrong. Ive already reinstalled it, so I don't know what else to do. Im working on it.",
+     "I love this game and play every day but lately the tile match ad disconnects me from the game and my answer is automatically wrong. I'm considering not playing anymore. It's so frustrating."
+    ],
+    "UX / Dizayn": [],
+    "Qiymət / Abunə": [],
+    "Çətinlik balansı": [
+     "it's too hard to navigate,, you get lost!!!"
+    ],
+    "Fırıldaq / Botlar": [
+     "its so easy to cheat using google. way too much time for each question.",
+     "game is always interrupted by Google play and I can't get back to it."
+    ],
+    "Hesab / Proqres itkisi": [
+     "If you don't have an account on Meta garbage services you are wasting your time, you don't have any people to compete with. Completely useless app!",
+     "Fed up with the game resetting to day one despite 50 plus days in."
+    ],
+    "Kontent / Kateqoriya": [
+     "Works fine just boring, repetative questions and keeps asking for me to add friends.",
+     "It has gone from one ad between games to two ads 😡 It now takes longer to do the quizzes, plus the two ads now make the app boring to use. I am getting close to stopping doing the quizzes and deleting the app. Please go back to just one ad."
+    ]
+   },
+   "praise": [
+    [
+     "fun",
+     43
+    ],
+    [
+     "friends",
+     23
+    ],
+    [
+     "learn",
+     16
+    ],
+    [
+     "brain",
+     16
+    ],
+    [
+     "challeng",
+     14
+    ],
+    [
+     "family",
+     12
+    ],
+    [
+     "educat",
+     11
+    ],
+    [
+     "addict",
+     6
+    ]
+   ]
+  },
+  "Duolingo (gamification etalonu)": {
+   "id": "com.duolingo",
+   "title": "Duolingo: Learn Languages",
+   "developer": "Duolingo",
+   "installs": "500,000,000+",
+   "score": 4.7459893,
+   "ratings": 51711095,
+   "price": 0,
+   "offersIAP": true,
+   "containsAds": true,
+   "genre": "Education",
+   "released": "May 29, 2013",
+   "updated": "Nov 3, 2026",
+   "reviews_n": 400,
+   "complaints_n": 51,
+   "avg_recent": 4.44,
+   "categories": [
+    [
+     "Xətalar / Çökmə",
+     7
+    ],
+    [
+     "Reklamlar",
+     6
+    ],
+    [
+     "Hesab / Proqres itkisi",
+     6
+    ],
+    [
+     "Qiymət / Abunə",
+     4
+    ],
+    [
+     "Sual keyfiyyəti",
+     3
+    ],
+    [
+     "Fırıldaq / Botlar",
+     2
+    ],
+    [
+     "Rəqib tapma / Multiplayer",
+     2
+    ],
+    [
+     "Can / Enerji limiti",
+     2
+    ],
+    [
+     "Kontent / Kateqoriya",
+     1
+    ],
+    [
+     "Sosial / Söhbət",
+     1
+    ],
+    [
+     "UX / Dizayn",
+     1
+    ],
+    [
+     "Çətinlik balansı",
+     1
+    ]
+   ],
+   "examples": {
+    "Reklamlar": [
+     "Doulingo did not teach me anything except apple in Spanish, and I always see ads on apps like YouTube saying \"it's free so you have no excuse\"😒 and it annoys me so much because doulingo did not teach me anything that's my excuse 😤",
+     "wow this is aggressive these days. there constant ads for super and use of energy is ridiculous, uninstalled pdq",
+     "it was once great but now every lesson has so many ads (both for Duolingo Super and other advertisers) afterwards, it got really annoying :/ and the heart system was also much better than the energy system (which is made to just keep you addicted)"
+    ],
+    "Kontent / Kateqoriya": [
+     "Even more dissatisfied a year later. Every new improvement makes the application less interesting. It was a great application 2 years ago. who needs the puzzle pieces. It takes your time snd makes the application boring. People come to learn another language."
+    ],
+    "Xətalar / Çökmə": [
+     "Very frustrating, the app is full of bugs and lately been riddled with senseless AI developed lessons! XP that is not counted, bonus that are not transferred from one day to the other. Honestly Duolingo dev. team, audit AI slop you are dumping onto us!"
+    ],
+    "Sual keyfiyyəti": [],
+    "Hesab / Proqres itkisi": [
+     "Doulingo is very fun and teaches to things you never knew axisted losing a streak is this worst thing possible on doulingo",
+     "The app keeps failing to register that I did a lesson so I can even complete my streak, and nothing I did could fix it. FIX IT.",
+     "does not teach you enough terminology for reading. lost a very large answer streak because of that"
+    ],
+    "Sosial / Söhbət": [],
+    "Qiymət / Abunə": [
+     "rudimentary, impractical lessons and dishonest business practices. did not tell me my free trial was ending and charged me $120. not worth paying for, and honestly not really suffering the the scammy, impossible to close ads for either."
+    ],
+    "Fırıldaq / Botlar": [
+     "it was once great but now every lesson has so many ads (both for Duolingo Super and other advertisers) afterwards, it got really annoying :/ and the heart system was also much better than the energy system (which is made to just keep you addicted)"
+    ],
+    "Rəqib tapma / Multiplayer": [],
+    "UX / Dizayn": [],
+    "Can / Enerji limiti": [
+     "wow this is aggressive these days. there constant ads for super and use of energy is ridiculous, uninstalled pdq",
+     "it was once great but now every lesson has so many ads (both for Duolingo Super and other advertisers) afterwards, it got really annoying :/ and the heart system was also much better than the energy system (which is made to just keep you addicted)"
+    ],
+    "Çətinlik balansı": [
+     "rudimentary, impractical lessons and dishonest business practices. did not tell me my free trial was ending and charged me $120. not worth paying for, and honestly not really suffering the the scammy, impossible to close ads for either."
+    ]
+   },
+   "praise": [
+    [
+     "learn",
+     85
+    ],
+    [
+     "fun",
+     29
+    ],
+    [
+     "streak",
+     4
+    ],
+    [
+     "educat",
+     4
+    ],
+    [
+     "friends",
+     2
+    ],
+    [
+     "challeng",
+     1
+    ],
+    [
+     "family",
+     1
+    ],
+    [
+     "kids",
+     1
+    ]
+   ]
+  }
+ },
+ "az_search": {
+  "viktorina": [
+   {
+    "title": "QuizzLand: Trivia Quiz Oyunu",
+    "id": "com.xmonetize.quizzland",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "100.000.000+",
+    "score": 4.8167863,
+    "ratings": 1958565,
+    "updated": "30 okt 2026"
+   },
+   {
+    "title": "Kahoot! Play & Create Quizzes",
+    "id": "no.mobitroll.kahoot.android",
+    "dev": "Kahoot!",
+    "installs": "100.000.000+",
+    "score": 4.68,
+    "ratings": 859645,
+    "updated": "29 okt 2026"
+   },
+   {
+    "title": "Trivia Crack: Brain Quiz Games",
+    "id": "com.etermax.preguntados.lite",
+    "dev": "etermax",
+    "installs": "100.000.000+",
+    "score": 4.1287127,
+    "ratings": 7841248,
+    "updated": "4 noy 2026"
+   },
+   {
+    "title": "2 Player Quiz Pro: Viktorina",
+    "id": "com.inspiredandroid.twoplayerquizultimate",
+    "dev": "Simon Schubert",
+    "installs": "100.000+",
+    "score": 3.1666667,
+    "ratings": 1983,
+    "updated": "2 noy 2026"
+   },
+   {
+    "title": "MIDU Games | Kvízová hra",
+    "id": "com.midu.games",
+    "dev": "MIDU Dev Team",
+    "installs": "10.000+",
+    "score": null,
+    "ratings": null,
+    "updated": "31 okt 2024"
+   },
+   {
+    "title": "Panic Singer - Music Trivia",
+    "id": "com.Vahagn.panic_android",
+    "dev": "Khachatur Ghazaryan",
+    "installs": "10.000+",
+    "score": null,
+    "ratings": null,
+    "updated": "1 noy 2026"
+   },
+   {
+    "title": "GeoGuessr",
+    "id": "com.geoguessr.app",
+    "dev": "GeoGuessr",
+    "installs": "10.000.000+",
+    "score": 4.65,
+    "ratings": 88098,
+    "updated": "3 noy 2026"
+   },
+   {
+    "title": "Guess The Answer: Viktorina",
+    "id": "com.mnogoteams.guesstheanswer",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "100.000+",
+    "score": null,
+    "ratings": null,
+    "updated": "23 okt 2026"
+   }
+  ],
+  "bilik yarışı": [
+   {
+    "title": "SABIQUUN: Dini Bilik Yarışı",
+    "id": "com.sabiquun.islam.world",
+    "dev": "Kodentix Dev",
+    "installs": "100+",
+    "score": null,
+    "ratings": null,
+    "updated": "6 noy 2026"
+   },
+   {
+    "title": "Milyonçu 2022 (Bilik yarışı)",
+    "id": "com.milyoncu2022",
+    "dev": "OmegaQuizGames",
+    "installs": "100.000+",
+    "score": 4.48,
+    "ratings": 947,
+    "updated": "20 noy 2022"
+   },
+   {
+    "title": "Yeni-Milyonçu: Bilik oyunu",
+    "id": "oyun.test.sualcavab.iq.millionaire.azerbaijani.milyoncu.azerbaycanca",
+    "dev": "Quizo Brain Games",
+    "installs": "1.000.000+",
+    "score": 4.6681714,
+    "ratings": 13573,
+    "updated": "8 noy 2026"
+   },
+   {
+    "title": "İslami Milyoner: Bilik Yarışı",
+    "id": "com.dogru.yol.bilik",
+    "dev": "C.M Studios",
+    "installs": "1.000+",
+    "score": 5,
+    "ratings": 14,
+    "updated": "25 okt 2026"
+   },
+   {
+    "title": "Trivia Crack: Brain Quiz Games",
+    "id": "com.etermax.preguntados.lite",
+    "dev": "etermax",
+    "installs": "100.000.000+",
+    "score": 4.1287127,
+    "ratings": 7841248,
+    "updated": "4 noy 2026"
+   },
+   {
+    "title": "BilBileBilirsen Bilgi Yarışı",
+    "id": "com.emmedya.bilbilebilirsen",
+    "dev": "Emmedya",
+    "installs": "1.000+",
+    "score": null,
+    "ratings": null,
+    "updated": "13 sen 2026"
+   },
+   {
+    "title": "QuizzLand: Trivia Quiz Oyunu",
+    "id": "com.xmonetize.quizzland",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "100.000.000+",
+    "score": 4.8167863,
+    "ratings": 1958565,
+    "updated": "30 okt 2026"
+   },
+   {
+    "title": "Triviascapes: Quiz & IQ Testi",
+    "id": "com.mnogogames.triviascapes",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "10.000.000+",
+    "score": 4.859375,
+    "ratings": 766877,
+    "updated": "2 noy 2026"
+   }
+  ],
+  "quiz azərbaycan": [
+   {
+    "title": "GuessPho Azərbaycan dilində",
+    "id": "labs.emeraldys.ZoomPhotoQuizTrivia",
+    "dev": "Emeraldys",
+    "installs": "50.000+",
+    "score": null,
+    "ratings": null,
+    "updated": "12 avq 2026"
+   },
+   {
+    "title": "Azərbaycan dili (testlər)",
+    "id": "com.azdili.suallari",
+    "dev": "Smart Developing",
+    "installs": "5.000+",
+    "score": 4.4,
+    "ratings": 15,
+    "updated": "18 sen 2026"
+   },
+   {
+    "title": "Azərbaycan dili - QuizMilli",
+    "id": "com.yzasoft.quizim",
+    "dev": "YZA Soft",
+    "installs": "5.000+",
+    "score": 3.8947368,
+    "ratings": 19,
+    "updated": "5 mar 2025"
+   },
+   {
+    "title": "QuizzLand: Trivia Quiz Oyunu",
+    "id": "com.xmonetize.quizzland",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "100.000.000+",
+    "score": 4.8167863,
+    "ratings": 1958565,
+    "updated": "30 okt 2026"
+   },
+   {
+    "title": "Yeni-Milyonçu: Bilik oyunu",
+    "id": "oyun.test.sualcavab.iq.millionaire.azerbaijani.milyoncu.azerbaycanca",
+    "dev": "Quizo Brain Games",
+    "installs": "1.000.000+",
+    "score": 4.6681714,
+    "ratings": 13573,
+    "updated": "8 noy 2026"
+   },
+   {
+    "title": "Trivia Quiz 2026: Fun IQ Games",
+    "id": "com.submarineapps.mill",
+    "dev": "Quiz & Trivia Games by Submarine Apps",
+    "installs": "100.000.000+",
+    "score": 4.4895835,
+    "ratings": 374591,
+    "updated": "5 noy 2026"
+   },
+   {
+    "title": "Quiz Blitz: Test Brain Game",
+    "id": "com.mnogoteams.quizblitz",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "1.000.000+",
+    "score": 4.888889,
+    "ratings": 82718,
+    "updated": "30 okt 2026"
+   },
+   {
+    "title": "Milyonçu -Azərbaycan Tarixi",
+    "id": "milyoncu.sualcavab_soz_oyunu.azerbaycan_tarixi_suallar",
+    "dev": "Quizo Brain Games",
+    "installs": "100.000+",
+    "score": 4.6434107,
+    "ratings": 1326,
+    "updated": "8 noy 2026"
+   }
+  ],
+  "milyoner azərbaycan": [
+   {
+    "title": "Yeni-Milyonçu: Bilik oyunu",
+    "id": "oyun.test.sualcavab.iq.millionaire.azerbaijani.milyoncu.azerbaycanca",
+    "dev": "Quizo Brain Games",
+    "installs": "1.000.000+",
+    "score": 4.6681714,
+    "ratings": 13573,
+    "updated": "8 noy 2026"
+   },
+   {
+    "title": "Milyonçu -Azərbaycan Tarixi",
+    "id": "milyoncu.sualcavab_soz_oyunu.azerbaycan_tarixi_suallar",
+    "dev": "Quizo Brain Games",
+    "installs": "100.000+",
+    "score": 4.6434107,
+    "ratings": 1326,
+    "updated": "8 noy 2026"
+   },
+   {
+    "title": "Kim milyoner olmak ister?",
+    "id": "com.CODENIS.MilyonerYarma",
+    "dev": "codenis",
+    "installs": "100.000+",
+    "score": 4.5,
+    "ratings": 106,
+    "updated": "2 noy 2026"
+   },
+   {
+    "title": "Yeni Milyoner: Söz Oyunu",
+    "id": "oyun.bilgi.entellektuel.iq.millionaire.turkish.milyoner.turkce",
+    "dev": "MazeWaze Games",
+    "installs": "10.000+",
+    "score": 4.5238094,
+    "ratings": 129,
+    "updated": "8 okt 2026"
+   },
+   {
+    "title": "Official Millionaire Game",
+    "id": "com.sonypicturestelevision.millionaire",
+    "dev": "Uken Games",
+    "installs": "10.000.000+",
+    "score": 4.3267326,
+    "ratings": 249078,
+    "updated": "2 noy 2026"
+   },
+   {
+    "title": "Milyonçu: Azərbaycan coğrafiya",
+    "id": "milyoncu.sualcavab_soz_oyunu.azerbaycan_cografiyasi_suallar",
+    "dev": "MazeWaze Games",
+    "installs": "50.000+",
+    "score": 4.61,
+    "ratings": 706,
+    "updated": "8 okt 2026"
+   },
+   {
+    "title": "Milyonçu 2022 (Bilik yarışı)",
+    "id": "com.milyoncu2022",
+    "dev": "OmegaQuizGames",
+    "installs": "100.000+",
+    "score": 4.48,
+    "ratings": 947,
+    "updated": "20 noy 2022"
+   },
+   {
+    "title": "Dini Milyoner: Bilgi oyun",
+    "id": "tr.milyoner.EntellektuelTurkceIslam.kimmilyonerbilgiyarismasi",
+    "dev": "MazeWaze Games",
+    "installs": "100.000+",
+    "score": 4.8,
+    "ratings": 2220,
+    "updated": "8 okt 2026"
+   }
+  ],
+  "intellektual oyun": [
+   {
+    "title": "Math Master | Crossmath QUIZ",
+    "id": "com.divinecodeproductions.MathMaster",
+    "dev": "DivineCode Productions",
+    "installs": "500.000+",
+    "score": 4.892857,
+    "ratings": 7538,
+    "updated": "17 okt 2026"
+   },
+   {
+    "title": "QuizzLand: Trivia Quiz Oyunu",
+    "id": "com.xmonetize.quizzland",
+    "dev": "Quiz & Trivia Games by Mno Go Apps",
+    "installs": "100.000.000+",
+    "score": 4.8167863,
+    "ratings": 1958565,
+    "updated": "30 okt 2026"
+   },
+   {
+    "title": "Lumosity: Brain Training Games",
+    "id": "com.lumoslabs.lumosity",
+    "dev": "Lumos Labs, Inc.",
+    "installs": "10.000.000+",
+    "score": 4.5,
+    "ratings": 325955,
+    "updated": "6 noy 2026"
+   },
+   {
+    "title": "Number Match - Number Games",
+    "id": "com.easybrain.number.puzzle.game",
+    "dev": "Easybrain",
+    "installs": "50.000.000+",
+    "score": 4.872,
+    "ratings": 627317,
+    "updated": "4 noy 2026"
+   },
+   {
+    "title": "Intellecto Kids Learning Games",
+    "id": "com.intellectokids.academy",
+    "dev": "IntellectoKids Ltd",
+    "installs": "1.000.000+",
+    "score": 4.852941,
+    "ratings": 11259,
+    "updated": "8 okt 2026"
+   },
+   {
+    "title": "Elevate - Brain Training Games",
+    "id": "com.wonder",
+    "dev": "The Mind Company",
+    "installs": "10.000.000+",
+    "score": 4.58,
+    "ratings": 520777,
+    "updated": "2 noy 2026"
+   },
+   {
+    "title": "Words Of Wonders: Krossvord",
+    "id": "com.fugo.wow",
+    "dev": "Fugo Games",
+    "installs": "100.000.000+",
+    "score": 4.8408823,
+    "ratings": 6540563,
+    "updated": "5 noy 2026"
+   },
+   {
+    "title": "NeuroNation - Brain Training",
+    "id": "air.nn.mobile.app.main",
+    "dev": "NeuroNation",
+    "installs": "10.000.000+",
+    "score": 4.891089,
+    "ratings": 480431,
+    "updated": "27 okt 2026"
+   }
+  ]
+ }
+}
