@@ -499,7 +499,7 @@
 
   /* ════════════ PAYLAŞILAN OYUN / DOST DUELİ ════════════ */
   function challengeResult(Q, r) {
-    const verdict = r >= .85 ? 'Dərinliklərin ustasısan! Bu sınaqdan belə nəticə az adam çıxarır.' : r >= .6 ? 'Güclü nəticədir — suallar asan deyildi.' : r >= .35 ? 'Pis deyil! Bu sınaq çətin idi.' : 'Bu sınaq həqiqətən çətin idi. Cavablara bax, növbəti dəfə daha dərinə dalarsan.';
+    const verdict = r >= .85 ? 'Dərinliklərin ustasısan! Bu sınaqdan belə nəticə az adam çıxarır.' : r >= .6 ? 'Güclü nəticədir. Suallar heç də asan deyildi.' : r >= .35 ? 'Pis deyil! Bu sınaq çətin idi.' : 'Bu sınaq həqiqətən çətin idi. Cavablara bax, növbəti dəfə daha dərinə dalarsan.';
     return `<div class="share-grid">${Q.res.map((x, i) => `<i class="${x ? 'y' : 'n'}" style="animation-delay:${i * .04}s"></i>`).join('')}</div>
       <p class="ch-verdict">${verdict}</p>
       <button class="btn block" data-act="duohost" style="margin-bottom:12px">Dostunu canlı duelə çağır ⚔️</button>
@@ -879,7 +879,7 @@
       const g = []; for (let i = 0; i < Q.res.length; i += 10) g.push(Q.res.slice(i, i + 10).map(x => x ? '🟦' : '⬜').join(''));
       const text = `${Q.title}: ${ok}/${Q.res.length} 🤿\n${g.join('\n')}\nSən neçə edərsən? 20 çətin sual:`;
       try { if (navigator.share) { await navigator.share({ text, url: chLink() }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
-      try { await navigator.clipboard.writeText(`${text}\n${chLink()}`); toast('Link kopyalandı — WhatsApp və ya Telegram-a yapışdır'); }
+      try { await navigator.clipboard.writeText(`${text}\n${chLink()}`); toast('Link kopyalandı. WhatsApp və ya Telegram-a yapışdır'); }
       catch (e) { toast(chLink()); }
       return;
     }

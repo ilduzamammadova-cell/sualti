@@ -1,4 +1,4 @@
-/* Sualtı — canlı dost dueli (1-ə-1, eyni anda).
+/* Sualtı: canlı dost dueli (1-ə-1, eyni anda).
    Çağıran link yaradır və gözləyir; dost linki açıb "Qəbul et" deyir; çağıran da qəbul edəndə 3-2-1 və oyun başlayır.
    Hər ikisi eyni suala eyni anda cavab verir. Hər sualdan sonra hər kəs öz cavabını və rəqibin düz/səhv olduğunu görür;
    xal yalnız sonda açılır. Sonda qalibə və uduzana zarafatlı atmaca.
@@ -21,37 +21,82 @@
   const da = n => { const v = String(n).toLowerCase().match(/[aıoueəiöü](?=[^aıoueəiöü]*$)/); return v && 'eəiöü'.includes(v[0]) ? 'də' : 'da'; };
   const pts = (ok, ms) => ok ? 10 + Math.round(10 * Math.max(0, 1 - ms / 1000 / QSEC)) : 0;
 
-  // Sonda atmacalar. {op} — rəqibin adı, {me}/{them} — düz cavab sayı, {w} — səhv sayı
+  // Sonda atmacalar. {op}: rəqibin adı, {me}/{them}: düz cavab sayı, {w}: səhv sayı
   const TAUNTS = {
     win: [
-      'Bugünün qalibi sənsən! 🏆 {op} hələ də nə baş verdiyini anlamağa çalışır.',
-      'Sualtının ən dərin dalğıcı bu gün sənsən 🤿 {op} isə səthdə qaldı, qabarcıq buraxır 🫧',
-      '{me} düz cavab! {op} indi “şans idi” deyəcək. Sən isə gülümsə və susmaq hüququnu saxla 😎',
-      'Bu gün bilik sənin tərəfində idi. {op}, kitabları tozdan təmizləmək vaxtıdır 📚',
+      'Bugünün qalibi sənsən! 🏆 {op} hələ də başa düşmür ki, nə oldu.',
+      'Bu gün ən dərinə sən daldın 🤿 {op} isə səthdə qalıb qabarcıq buraxır 🫧',
+      '{me} düz cavab! {op} indi deyəcək ki, şans idi. Sən sadəcə gülümsə 😎',
+      'Bilik bu gün sənin tərəfində idi. {op}, kitabları tozdan təmizləmək vaxtıdır 📚',
     ],
     lose: [
-      'Bu gün qalib sən olmadın. {w} səhvin oldu — {op} səni sualtında qabaqladı 🐟 Yenə hazırlaş!',
-      '{w} səhv… Deyəsən oksigen tez bitdi 🫧 {op} bu gün daha dərinə daldı. Revanş səni gözləyir!',
-      'Bu dəfə {op} bir addım öndə idi. Sən isə {w} dəfə yolu azdın 🧭 Məşq et, güclü qayıt!',
-      '{op} indi bu nəticəni hamıya göstərəcək 😅 Susdurmağın bir yolu var — revanş!',
+      'Bu gün qalib sən olmadın. {w} səhvin oldu, {op} səni sualtında qabaqladı 🐟 Yenə hazırlaş!',
+      '{w} səhv... Deyəsən oksigenin tez bitdi 🫧 {op} bu gün səndən dərinə daldı. Revanş səni gözləyir!',
+      'Bu dəfə {op} bir addım öndə idi. Sən {w} dəfə yolu azdın 🧭 Bir az məşq et, güclü qayıt!',
+      '{op} bu nəticəni indi hamıya göstərəcək 😅 Onu susdurmağın bir yolu var: revanş!',
     ],
     draw: [
-      'Heç-heçə! İki dalğıc, bir dərinlik 🤝 Bu iş revanşsız bitməz 😄',
-      'Bərabər! {op} ilə sən eyni dərinlikdəsiniz. Növbəti raundda kim batacaq? 🌊',
+      'Heç-heçə! İki dalğıc, eyni dərinlik 🤝 Bu iş revanşsız bitməz 😄',
+      'Bərabər bitdi! {op} ilə eyni dərinlikdəsiniz. Görək növbəti dəfə kim batacaq 🌊',
     ],
   };
   const taunt = (k, v) => { const a = TAUNTS[k]; return esc(a[Math.floor(Math.random() * a.length)]).replace(/\{(\w+)\}/g, (_, x) => esc(v[x] ?? '')); };
 
   let G = null;
+  /* ── Su altı səhnəsi: şüalar, qabarcıqlar, üzən balıqlar ── */
+  const FISH_C = ['#FFD43B', '#FF7A59', '#4FC3FF', '#8B5CF6', '#4ADE80', '#F472B6'];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const fishSVG = (c, s) => `<span class="duo-fish-in" style="width:${s}px;height:${s}px">${window.creatureSVG ? creatureSVG('fish', c) : ''}</span>`;
+  function sea() {
+    const bub = Array.from({ length: 18 }, () => { const s = rnd(6, 22); return `<i class="duo-bub" style="left:${rnd(2, 98)}%;width:${s}px;height:${s}px;animation-duration:${rnd(7, 15)}s;animation-delay:-${rnd(0, 15)}s"></i>`; }).join('');
+    const fish = Array.from({ length: 5 }, (_, i) => { const rtl = i % 2; return `<span class="duo-fish ${rtl ? 'rtl' : ''}" style="top:${rnd(8, 88)}%;animation-duration:${rnd(16, 28)}s;animation-delay:-${rnd(0, 28)}s;opacity:${rnd(.35, .7)}">${fishSVG(FISH_C[i % FISH_C.length], rnd(26, 46))}</span>`; }).join('');
+    return `<div class="duo-sea" aria-hidden="true"><div class="duo-rays"></div>${bub}${fish}<div class="duo-weed l"></div><div class="duo-weed r"></div></div>`;
+  }
   function overlay(cls = '') {
     let o = $('#duo');
     if (!o) {
       o = document.createElement('div'); o.id = 'duo'; document.body.appendChild(o);
+      o.innerHTML = `${sea()}<div class="duo-fx" id="duoFx" aria-hidden="true"></div><div class="duo-stage" id="duoStage"></div>`;
       o.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) act(b.dataset.d, b); });
     }
     o.className = 'party player duo ' + cls; return o;
   }
-  const screen = (html, cls = '') => { overlay(cls).innerHTML = `<div class="pp">${html}</div>`; };
+  // Keçid: qabarcıq dalğası ekranı yuyub keçir
+  function wipe() {
+    const fx = $('#duoFx'); if (!fx) return;
+    const w = document.createElement('div'); w.className = 'duo-wipe';
+    w.innerHTML = Array.from({ length: 26 }, () => { const s = rnd(14, 46); return `<i style="left:${rnd(0, 100)}%;width:${s}px;height:${s}px;animation-delay:${rnd(0, .25)}s"></i>`; }).join('');
+    fx.appendChild(w); setTimeout(() => w.remove(), 1300);
+  }
+  const screen = (html, cls = '', fx = true) => {
+    overlay(cls); if (fx) wipe();
+    $('#duoStage').innerHTML = `<div class="pp ${fx ? 'duo-in' : ''}">${html}</div>`;
+  };
+  // Effektlər: düz cavab qabarcıq partlayışı, qələbə bayramı, məğlubiyyətdə dibə enmə
+  function burst(n = 22) {
+    const fx = $('#duoFx'); if (!fx) return;
+    const b = document.createElement('div'); b.className = 'duo-burst';
+    b.innerHTML = Array.from({ length: n }, () => { const a = rnd(0, Math.PI * 2), d = rnd(90, 210), s = rnd(8, 22);
+      return `<i style="--x:${Math.cos(a) * d}px;--y:${Math.sin(a) * d}px;width:${s}px;height:${s}px;animation-delay:${rnd(0, .12)}s"></i>`; }).join('');
+    fx.appendChild(b); setTimeout(() => b.remove(), 1400);
+  }
+  function celebrate() {
+    const fx = $('#duoFx'); if (!fx) return;
+    const c = document.createElement('div'); c.className = 'duo-party';
+    const kinds = ['star', 'shell', 'jelly'];
+    const rain = Array.from({ length: 22 }, (_, i) => `<span class="duo-drop" style="left:${rnd(0, 96)}%;animation-duration:${rnd(2.6, 4.6)}s;animation-delay:${rnd(0, 1.6)}s;--r:${rnd(-200, 200)}deg"><span style="width:${rnd(22, 34)}px;height:${rnd(22, 34)}px;display:block">${window.creatureSVG ? creatureSVG(kinds[i % 3], FISH_C[i % FISH_C.length]) : ''}</span></span>`).join('');
+    const school = Array.from({ length: 9 }, (_, i) => `<span class="duo-school" style="top:${18 + (i % 3) * 9 + rnd(-3, 3)}%;animation-delay:${Math.floor(i / 3) * .25 + rnd(0, .15)}s">${fishSVG(FISH_C[i % FISH_C.length], rnd(30, 44))}</span>`).join('');
+    const bubs = Array.from({ length: 30 }, () => { const s = rnd(8, 26); return `<i class="duo-up" style="left:${rnd(0, 100)}%;width:${s}px;height:${s}px;animation-delay:${rnd(0, 1.4)}s;animation-duration:${rnd(1.8, 3.2)}s"></i>`; }).join('');
+    c.innerHTML = rain + school + bubs;
+    fx.appendChild(c); setTimeout(() => c.remove(), 6500);
+  }
+  function sink() {
+    const fx = $('#duoFx'); if (!fx) return;
+    const c = document.createElement('div'); c.className = 'duo-sink';
+    c.innerHTML = Array.from({ length: 10 }, () => { const s = rnd(6, 16); return `<i class="duo-up slow" style="left:${rnd(10, 90)}%;width:${s}px;height:${s}px;animation-delay:${rnd(0, 2)}s"></i>`; }).join('')
+      + `<span class="duo-sadfish">${fishSVG('#94A3B8', 54)}</span>`;
+    fx.appendChild(c); setTimeout(() => c.remove(), 6000);
+  }
   const clearT = () => { if (!G) return; G.timers.forEach(t => { clearTimeout(t); clearInterval(t); }); G.timers = []; };
   const send = m => { try { G && G.conn && G.conn.open && G.conn.send(m); } catch (e) {} };
   const link = () => `${location.origin}${location.pathname}?oyun=${encodeURIComponent(G.key)}&duel=${G.code}&f=${encodeURIComponent(G.me)}`;
@@ -90,7 +135,7 @@
       <button class="btn block" data-d="share">Linki göndər 🔗</button>
       <button class="btn white block" data-d="copy">Linki kopyala</button>` : '<div class="pp-wait"><i></i><i></i><i></i></div>'}
       <div class="duo-pills"><span class="on">✓ ${esc(G.me)}</span><span>⏳ rəqib gözlənilir</span></div>
-      <p class="pp-small" id="duoStatus">${ready ? 'Bu səhifəni bağlama — duel buradan idarə olunur.' : ''}</p>
+      <p class="pp-small" id="duoStatus">${ready ? 'Bu səhifəni bağlama, duel buradan idarə olunur.' : ''}</p>
       <button class="mk-solo" data-d="close">Ləğv et</button>`);
   }
   function waitStatus(t, bad) { const s = $('#duoStatus'); if (s) { s.textContent = t; s.classList.toggle('bad', !!bad); } }
@@ -164,7 +209,7 @@
         G.conn.on('close', lost);
       });
       G.peer.on('error', e => fail(e.type === 'peer-unavailable'
-        ? `Duel otağı tapılmadı. ${esc(G.op)} duel səhifəsini bağlayıb ola bilər — yeni link istə.`
+        ? `Duel otağı tapılmadı. ${esc(G.op)} duel səhifəsini bağlamış ola bilər. Ondan yeni link istə.`
         : 'Qoşulmaq alınmadı. İnterneti yoxla və yenidən cəhd et.'));
     }).catch(() => fail('Əlaqə kitabxanası yüklənmədi. İnterneti yoxla.'));
   }
@@ -193,7 +238,7 @@
   /* ════════ Ortaq ekranlar ════════ */
   function countdown(done) {
     let n = 3; sfx('swoosh');
-    const draw = () => screen(`<p class="duo-vs"><b>${esc(G.me)}</b> <i>VS</i> <b>${esc(G.op)}</b></p><div class="duo-count">${n}</div><p>Hazırlaş!</p>`);
+    const draw = () => screen(`<p class="duo-vs"><b>${esc(G.me)}</b> <i>VS</i> <b>${esc(G.op)}</b></p><div class="duo-count" key="${n}">${n}</div><p>Hazırlaş! Dərindən nəfəs al 🫧</p>`, '', n === 3);
     draw();
     const t = setInterval(() => { n--; if (n <= 0) { clearInterval(t); done && done(); } else { draw(); sfx('tick'); } }, 900);
     G.timers.push(t);
@@ -216,13 +261,15 @@
       <h2>${d.ok ? 'Düzdür!' : d.mine != null ? 'Səhv' : 'Vaxt bitdi'}</h2>
       ${d.ok ? '' : `<p>Düzgün cavab: <b>${esc(d.correct)}</b></p>`}
       <div class="duo-opline ${d.opOk ? 'y' : 'n'}">${opLine}</div>
-      <p class="pp-small">${d.last ? 'Nəticə hesablanır… 🏆' : 'Xal sonda açılacaq 🤫 · növbəti sual gəlir…'}</p></div>`, d.ok ? 'ok' : 'no');
+      <p class="pp-small">${d.last ? 'Nəticə hesablanır 🏆' : 'Xallar sonda açılacaq 🤫 Növbəti sual gəlir'}</p></div>`, d.ok ? 'ok' : 'no');
+    if (d.ok) setTimeout(() => burst(), 180);
   }
   function showEnd(d) {
     clearT();
     const me = d.me, op = d.op, win = me.score > op.score, draw = me.score === op.score;
     sfx(win ? 'fanfare' : draw ? 'logo' : 'wrong');
     const line = taunt(draw ? 'draw' : win ? 'win' : 'lose', { op: op.name, me: me.right, them: op.right, w: d.n - me.right });
+    setTimeout(() => (win ? celebrate() : draw ? burst(30) : sink()), 250);
     const card = (p, w) => `<div class="duo-p ${w ? 'won' : ''}"><small>${esc(p.name)}</small><b>${p.score}</b><span>${p.right}/${d.n} düz</span>${w ? '<i>👑</i>' : ''}</div>`;
     screen(`<div class="pp-logo">${window.mascot ? mascot(win ? 'party' : draw ? 'happy' : 'sad') : ''}</div>
       <h2>${draw ? 'Heç-heçə! 🤝' : win ? 'Bugünün qalibi sənsən! 🏆' : 'Bu gün qalib sən olmadın 🙈'}</h2>
@@ -230,7 +277,7 @@
       <div class="duo-taunt ${win ? 'win' : draw ? '' : 'lose'}">${line}</div>
       <button class="btn block" data-d="rematch">Revanş ⚔️</button>
       <details class="pp-log"><summary>Cavablara bax</summary>${(d.log || []).map((r, i) => `<div class="pp-lr ${r.okMe ? 'y' : 'n'}"><span>${i + 1}</span><p>${esc(r.q)}<small>${r.okMe ? '✓ ' + esc(r.correct) : `✗ ${r.me ? esc(r.me) : 'cavab yox'} · düz: ${esc(r.correct)}`}</small><small class="duo-their">${esc(op.name)}: ${r.okOp ? '✓' : '✗'}</small></p></div>`).join('')}</details>
-      <button class="btn white block" data-d="close">Sualtını kəşf et 🤿</button>`, win ? 'end win' : 'end');
+      <button class="btn white block" data-d="close">Sualtını kəşf et 🤿</button>`, win ? 'end win' : draw ? 'end' : 'end lose');
   }
   function lost() {
     if (!G || G.phase === 'end' || G.closing) return;
@@ -264,7 +311,7 @@
         G.ans.me = { c, ms: performance.now() - G.t0 }; send({ t: 'opdone' });
         if (G.ans.op) G.timers.push(setTimeout(reveal, 350));
       } else send({ t: 'ans', i: G.qi, c });
-      const q = $('#duo .pp-q'); if (q) q.insertAdjacentHTML('afterend', `<p class="pp-small duo-sent">Cavab göndərildi ✓ ${esc(G.op)} gözlənilir…</p>`);
+      const q = $('#duo .pp-q'); if (q) q.insertAdjacentHTML('afterend', `<p class="pp-small duo-sent">Cavabın getdi ✓ İndi ${esc(G.op)} düşünür...</p>`);
       return;
     }
     if (a === 'rematch') {

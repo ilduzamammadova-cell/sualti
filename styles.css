@@ -1128,3 +1128,55 @@ button.ph-opt:not(:disabled):active { transform: translateY(3px); box-shadow: 0 
 .duo-their { opacity: .75; }
 .pp-opt:disabled { cursor: default; }
 .mk .splash-btn { white-space: nowrap; font-size: 20px; padding-inline: 24px; }
+
+/* ── Duel: su altı səhnəsi və animasiyalar ── */
+.party.duo { background: radial-gradient(120% 80% at 50% 0%, #4FC3FF 0%, #1E6BFF 38%, #0E3C9E 75%, #071F55 100%); transition: background .6s ease; }
+.party.duo.end.lose { background: radial-gradient(120% 80% at 50% 0%, #2B4C8C 0%, #12285C 55%, #050E2B 100%); }
+.duo-sea, .duo-fx { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.duo-sea { z-index: 0; } .duo-fx { z-index: 3; }
+.duo-stage { position: relative; z-index: 1; width: 100%; flex: 1; display: flex; flex-direction: column; align-items: center; }
+.duo-stage > .pp { margin: auto 0; }
+.duo-rays { position: absolute; inset: -20% -10% 30%; background: repeating-linear-gradient(105deg, rgba(255,255,255,.10) 0 40px, transparent 40px 110px); filter: blur(8px); transform-origin: 50% 0; animation: duoRays 9s ease-in-out infinite alternate; mask-image: linear-gradient(#000, transparent); -webkit-mask-image: linear-gradient(#000, transparent); }
+@keyframes duoRays { from { transform: skewX(-6deg) translateX(-3%); opacity: .7; } to { transform: skewX(6deg) translateX(3%); opacity: 1; } }
+.duo-bub { position: absolute; bottom: -40px; border-radius: 50%; border: 2px solid rgba(255,255,255,.55); background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), rgba(255,255,255,.08) 45%, transparent 70%); animation: duoRise linear infinite; }
+@keyframes duoRise { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: .9; } 50% { transform: translate(14px, -55vh); } 100% { transform: translate(-10px, -115vh); opacity: 0; } }
+.duo-fish { position: absolute; left: -70px; animation: duoSwim linear infinite; }
+.duo-fish.rtl { left: auto; right: -70px; animation-name: duoSwimL; }
+.duo-fish.rtl .duo-fish-in { transform: scaleX(-1); }
+.duo-fish-in { display: block; animation: duoWiggle 1.4s ease-in-out infinite; }
+@keyframes duoSwim { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 140px)); } }
+@keyframes duoSwimL { from { transform: translateX(0); } to { transform: translateX(calc(-100vw - 140px)); } }
+@keyframes duoWiggle { 0%, 100% { translate: 0 0; rotate: -4deg; } 50% { translate: 0 -8px; rotate: 4deg; } }
+.duo-weed { position: absolute; bottom: -10px; width: 70px; height: 150px; opacity: .45; transform-origin: 50% 100%; animation: duoSway 4s ease-in-out infinite alternate;
+  background: radial-gradient(ellipse 14px 70px at 30% 100%, #22C55E 60%, transparent 62%), radial-gradient(ellipse 12px 52px at 62% 100%, #16A34A 60%, transparent 62%), radial-gradient(ellipse 10px 40px at 85% 100%, #4ADE80 60%, transparent 62%); }
+.duo-weed.l { left: 4px; } .duo-weed.r { right: 4px; animation-delay: -2s; transform: scaleX(-1); }
+@keyframes duoSway { from { rotate: -6deg; } to { rotate: 6deg; } }
+.duo-in { animation: duoIn .55s cubic-bezier(.2,.9,.3,1.2) both; }
+@keyframes duoIn { from { opacity: 0; transform: translateY(40px) scale(.96); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+.duo-wipe i { position: absolute; bottom: -60px; border-radius: 50%; border: 2px solid rgba(255,255,255,.8); background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85), rgba(255,255,255,.15) 50%, transparent 72%); animation: duoWipe 1.05s cubic-bezier(.3,.6,.4,1) forwards; }
+@keyframes duoWipe { to { transform: translateY(-120vh) scale(1.3); opacity: .2; } }
+.duo-burst { position: absolute; left: 50%; top: 32%; }
+.duo-burst i { position: absolute; border-radius: 50%; border: 2px solid #fff; background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.2) 55%, transparent 72%); animation: duoBurst 1.1s cubic-bezier(.2,.8,.3,1) forwards; }
+@keyframes duoBurst { from { transform: translate(-50%, -50%) scale(.2); opacity: 1; } to { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1); opacity: 0; } }
+.party.duo.no .pp-big { animation: slam .5s cubic-bezier(.2,.9,.3,1.6) both, duoShake .45s .45s ease both; }
+@keyframes duoShake { 0%, 100% { translate: 0; } 20% { translate: -10px; } 40% { translate: 9px; } 60% { translate: -6px; } 80% { translate: 4px; } }
+.duo-count { animation: slam .5s cubic-bezier(.2,.9,.3,1.6) both, duoPulse .9s ease-in-out infinite .5s; }
+@keyframes duoPulse { 50% { transform: scale(1.08); } }
+.duo-drop { position: absolute; top: -50px; animation: duoFall linear forwards; }
+@keyframes duoFall { to { transform: translateY(115vh) rotate(var(--r)); } }
+.duo-school { position: absolute; left: -60px; animation: duoDash 2.6s cubic-bezier(.4,.1,.5,1) forwards; }
+@keyframes duoDash { 0% { transform: translateX(0) translateY(0); } 50% { transform: translateX(55vw) translateY(-20px); } 100% { transform: translateX(calc(100vw + 120px)) translateY(10px); } }
+.duo-up { position: absolute; bottom: -30px; border-radius: 50%; border: 2px solid rgba(255,255,255,.75); background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.15) 55%, transparent 72%); animation: duoUp ease-out forwards; }
+.duo-up.slow { animation-duration: 4.5s; opacity: .6; }
+@keyframes duoUp { to { transform: translateY(-110vh); opacity: 0; } }
+.duo-sadfish { position: absolute; left: 50%; top: 18%; animation: duoSinkFish 5s ease-in forwards; }
+.duo-sadfish .duo-fish-in { animation: none; transform: rotate(160deg); }
+@keyframes duoSinkFish { 0% { transform: translate(-50%, 0) rotate(0); opacity: 0; } 15% { opacity: .9; } 100% { transform: translate(-30%, 75vh) rotate(25deg); opacity: 0; } }
+.party.duo.end.lose .pp-logo { animation: duoSinkLogo 3s ease-in-out infinite alternate; }
+@keyframes duoSinkLogo { to { transform: translateY(10px) rotate(-4deg); } }
+.party.duo.end.win .duo-p.won { animation: duoWin 1.2s ease-in-out infinite; }
+@keyframes duoWin { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .duo-sea *, .duo-fx *, .duo-in, .duo-count, .party.duo .pp-big, .duo-p.won { animation: none !important; }
+  .duo-fx { display: none; }
+}
