@@ -28,8 +28,8 @@
   const clip = (v, n = 24) => String(v || '').trim().slice(0, n);
   // Canlı dost dueli: ?oyun=1&duel=KOD&f=Çağıran&t=Çağırılan (duo.js)
   const DUO = (() => { try { const u = new URLSearchParams(location.search), c = u.get('duel');
-    return CH && c ? { code: c.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8), f: clip(u.get('f')) || 'Dostun' } : null; } catch (e) { return null; } })();
-  const ROOM = (() => { try { const r = new URLSearchParams(location.search).get('otaq'); return CH && r ? r.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12) || null : null; } catch (e) { return null; } })();
+    return CH && !CH.solo && c ? { code: c.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8), f: clip(u.get('f')) || 'Dostun' } : null; } catch (e) { return null; } })();
+  const ROOM = (() => { try { const r = new URLSearchParams(location.search).get('otaq'); return CH && !CH.solo && r ? r.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12) || null : null; } catch (e) { return null; } })();
   const chItems = () => { const byId = Object.fromEntries(ALLQ.map(q => [q.id, q])); return CH.items.map(x => x.ref ? byId[x.ref] : x).filter(Boolean); };
   function startChallenge() { startQuiz(chItems(), CH.title, false, CH_KEY); }
   const chLink = () => `${location.origin}${location.pathname}?oyun=${encodeURIComponent(CH_KEY)}`;
@@ -503,7 +503,7 @@
     const verdict = r >= .85 ? 'Dərinliklərin ustasısan! Bu sınaqdan belə nəticə az adam çıxarır.' : r >= .6 ? 'Güclü nəticədir. Suallar heç də asan deyildi.' : r >= .35 ? 'Pis deyil! Bu sınaq çətin idi.' : 'Bu sınaq həqiqətən çətin idi. Cavablara bax, növbəti dəfə daha dərinə dalarsan.';
     return `<div class="share-grid">${Q.res.map((x, i) => `<i class="${x ? 'y' : 'n'}" style="animation-delay:${i * .04}s"></i>`).join('')}</div>
       <p class="ch-verdict">${verdict}</p>
-      <button class="btn block" data-act="duohost" style="margin-bottom:12px">Dostunu canlı duelə çağır ⚔️</button>
+      ${CH && CH.solo ? '' : '<button class="btn block" data-act="duohost" style="margin-bottom:12px">Dostunu canlı duelə çağır ⚔️</button>'}
       <button class="btn white block" data-act="share" style="margin-bottom:12px">Nəticəni paylaş 🔗</button>
       <details class="ch-review"><summary>Cavablara bax</summary>
       ${Q.items.map((q, i) => `<div class="ch-row ${Q.res[i] ? 'y' : 'n'}"><span class="ch-n">${Q.res[i] ? '✓' : '✗'}</span><span><small>${esc(q.q)}</small><b>${q.kind === 'e' ? `${fmt(q.ans)} ${esc(q.unit)}` : esc(q.opts[q.a])}</b></span></div>`).join('')}
@@ -992,6 +992,9 @@
             <p class="mk-err" id="jnErr" hidden>Adını yaz 🙂</p>
             <button type="button" class="btn pulse splash-btn" data-act="duojoin">Qəbul et ⚔️</button>
           </form>`
+        : CH && CH.solo ? `<div class="splash-ch"><b>${esc(CH.title)}</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span>
+          <span class="splash-note">Sən və suallar. Görək nə qədər dərinə dala biləcəksən</span></div>
+          <button class="btn pulse splash-btn" data-act="enter">Başla 🤿</button>`
         : CH ? `<div class="splash-ch"><b>${esc(CH.title)}</b><span>${esc(CH.sub)} · hər suala 20 saniyə</span></div>${splashForm()}`
         : `<p class="splash-tag">Sualın dərinliyinə dal</p><button class="btn pulse splash-btn" data-act="enter">Dal! 🤿</button>`}<small class="splash-hint">🔊 səsi aç</small></div>
       <div class="splash-bubbles">${Array.from({ length: 14 }, (_, i) => `<i style="left:${5 + i * 6.7}%;animation-delay:${(i % 5) * .12}s;width:${10 + (i * 7) % 22}px;height:${10 + (i * 7) % 22}px"></i>`).join('')}</div>`;
